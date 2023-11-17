@@ -59,7 +59,7 @@ uphold their electoral promises.
 
 ## Possibilités de questions
 
-###  avec les données de google analytics : 
+###  Avec les données de google analytics : 
 
 1. 	Quel type de promesse est davantage visitée par les utilisateurs? 
 	(Catégorie d'enjeux, mais aussi état de réalisation)
@@ -74,13 +74,13 @@ uphold their electoral promises.
 7. 	Les visiteurs du Polimètre Trudeau visitent-ils surtout le site en 
 	anglais ou en français?
 
-###  avec les données du CES : 
+###  Avec les données du CES : 
 
 1. 	Quelles sont les perceptions des Canadiens du gouvernement Trudeau en 
 	général? (Des données de sondage pourraient aussi être mobilisées)
 2. 	Quels sont les enjeux les plus importants pour les Canadiens?
 
-###  avec le croisement de google analytics et des CES
+###  Avec le croisement de google analytics et des CES
 
 1. 	Est-ce que les données du Polimètre peuvent potentiellement être des 
 	indicateurs de l'opinion public ? (par exemple : préférence de catégories
