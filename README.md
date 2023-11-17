@@ -30,25 +30,30 @@ uphold their electoral promises.
 
 ## Variables intéressantes du CES : 
 
-# 2015: issAllEcnMI, issEnvMI, issAllSocPrMI, issAllMoralMI, issQcMI, 
+# 2015 
+	issAllEcnMI, issEnvMI, issAllSocPrMI, issAllMoralMI, issQcMI, 
 	issHlthMI, issCorrupMI, issCrimMI, issFrgnMI, issRghtsMI, 
 	issImmgAborMI (Most important issues/ Saillance)
 
-# 2015: noCarePeoThink, corrupGovt, losetouchElect, distrustMedia, distrustGovt,
+# 2015
+	noCarePeoThink, corrupGovt, losetouchElect, distrustMedia, distrustGovt,
 	cantTrustOthers, ppFeelLibALL, leadFeelLibALL, issCanadaFeelALL, 
 	issEcnBORWALL, polInter1FedALL, polInter2GenALL, persoCriticalALL, 
 	persoAnxiousALL (Cynisme, Distrust)
 
-# P.S. 	Il reste à voir l'étendue des possibilitées offertes par google 
+# P.S.
+ 	Il reste à voir l'étendue des possibilitées offertes par google 
 	analytics. Cela pourrait ouvrir la porte à de nouvelles questions
 
-# P.S.	Il n'est pas possible de lier les réponses invididuelles des 
+# P.S.	
+	Il n'est pas possible de lier les réponses invididuelles des 
 	répondants du CES avec les "pages views" du polimètre. Il est plutôt
 	souhaitable de comparer l'évolution de certaines tendances du CES au
 	fil des élections, afin de voir si ces tendances se retrouvent également
 	dans les données de google analytics.
 
-# P.S. 	Les variables sociodémographiques du CES sont pour la plupart
+# P.S. 
+	Les variables sociodémographiques du CES sont pour la plupart
 	inutiles. Par exemple, il serait intéressant de comparer le niveau 
 	d'éducation avec les préférences d'enjeux de promesses. Cependant, il
 	est probablement impossible d'avoir ces informations avec google
