@@ -1,4 +1,4 @@
-### SPSA_article_CPET
+# SPSA_article_CPET
 
 ## Auteurs : Benjamin Carignan
 
@@ -30,18 +30,18 @@ uphold their electoral promises.
 
 ## Variables intéressantes du CES : 
 
-# 2015 	(Most important issues/ Saillance)
+### 2015 	(Most important issues/ Saillance)
 	issAllEcnMI, issEnvMI, issAllSocPrMI, issAllMoralMI, issQcMI, 
 	issHlthMI, issCorrupMI, issCrimMI, issFrgnMI, issRghtsMI, 
 	issImmgAborMI
 
-# 2015	(Cynisme, Distrust)
+### 2015	(Cynisme, Distrust)
 	noCarePeoThink, corrupGovt, losetouchElect, distrustMedia, distrustGovt,
 	cantTrustOthers, ppFeelLibALL, leadFeelLibALL, issCanadaFeelALL, 
 	issEcnBORWALL, polInter1FedALL, polInter2GenALL, persoCriticalALL, 
 	persoAnxiousALL
 
-# P.S.
+### P.S.
  	Il reste à voir l'étendue des possibilitées offertes par google 
 	analytics. Cela pourrait ouvrir la porte à de nouvelles questions
 
@@ -59,7 +59,7 @@ uphold their electoral promises.
 
 ## Possibilités de questions
 
-#  avec les données de google analytics : 
+###  avec les données de google analytics : 
 
 1. 	Quel type de promesse est davantage visitée par les utilisateurs? 
 	(Catégorie d'enjeux, mais aussi état de réalisation)
@@ -74,13 +74,13 @@ uphold their electoral promises.
 7. 	Les visiteurs du Polimètre Trudeau visitent-ils surtout le site en 
 	anglais ou en français?
 
-#  avec les données du CES : 
+###  avec les données du CES : 
 
 1. 	Quelles sont les perceptions des Canadiens du gouvernement Trudeau en 
 	général? (Des données de sondage pourraient aussi être mobilisées)
 2. 	Quels sont les enjeux les plus importants pour les Canadiens?
 
-#  avec le croisement de google analytics et des CES
+###  avec le croisement de google analytics et des CES
 
 1. 	Est-ce que les données du Polimètre peuvent potentiellement être des 
 	indicateurs de l'opinion public ? (par exemple : préférence de catégories
@@ -90,21 +90,33 @@ uphold their electoral promises.
 
 ## Méthodologie envisagée : Hierarchical Linear Modeling (HLM):
 
-# INDIVIDUAL LEVEL
+### INDIVIDUAL LEVEL
 Yij = β0j + β1jXij + eij
 
-# GROUP LEVEL 
+### GROUP LEVEL 
 β0j = F00 + F01Wj + u0j
+
 β1j = F10 + F11Wj + u1j
 
 # Légende 
+
 Y = Cynisme
+
 i = Répondant individuel
+
 j = Groupe (Catégorie d'enjeu)
+
 β0j = Intercept par groupe
+
 β1j = Slope de x par groupe
+
 Xij = Page view (oui/non) par individu au niveau du groupe respectif
+
 F00 / F01 / F10 / F11 = Effets fixes au niveau du groupe.
+
 Wj = Prédicture au niveau du groupe	
+
 u0j / u1j = effets aléatoires au niveau du groupe
-eij = effets aléatoires au niveau individuel				 
+
+eij = effets aléatoires au niveau individuel	
+			 
