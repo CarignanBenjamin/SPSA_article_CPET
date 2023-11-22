@@ -30,10 +30,21 @@ uphold their electoral promises.
 
 ## Variables intéressantes du CES : 
 
-### 2015 	(Most important issues/ Saillance)
+### 2015-2019 	(Most important issues/ Saillance)
 	issAllEcnMI, issEnvMI, issAllSocPrMI, issAllMoralMI, issQcMI, 
 	issHlthMI, issCorrupMI, issCrimMI, issFrgnMI, issRghtsMI, 
 	issImmgAborMI
+
+### 2021 	(Most important issues/ Saillance)
+	Voir dans le codebook : cps21_imp_iss What is the most 
+	important issue to you personally in this federal election?
+	PUIS cps21_imp_iss_party Which party is best at addressing 
+	this issue? / 
+	LOCAL ISSUES : 	même chose pour cps21_imp_loc_iss et
+			cps21_imp_loc_iss_p
+	Il faut cleaner les réponses à cette question selon les catégories
+	d'enjeux et les faire concorder chaque année ensemble. Les questions
+	à ce sujet sont pareil.
 
 ### 2015	(Cynisme, Distrust)
 	noCarePeoThink, corrupGovt, losetouchElect, distrustMedia, distrustGovt,
@@ -114,7 +125,7 @@ Xij = Page view (oui/non) par individu au niveau du groupe respectif
 
 F00 / F01 / F10 / F11 = Effets fixes au niveau du groupe.
 
-Wj = Prédicture au niveau du groupe	
+Wj = Prédiction au niveau du groupe	
 
 u0j / u1j = effets aléatoires au niveau du groupe
 
