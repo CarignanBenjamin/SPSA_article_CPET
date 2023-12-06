@@ -8,7 +8,7 @@ pageviewcsv <- c("fr_pageview_rawdata.csv",
 pageviewrawdata <- data.frame()
 
 ## créer un chemin relatif
-relative_path <- file.path("_SharedFolder_CPET", "rawdata",
+relative_path <- file.path(getwd(),"_SharedFolder_CPET", "rawdata",
                            pageviewcsv)
 
 ## Faire une boucle sur chaque csv et les fusionner dans le même dataframe
@@ -21,3 +21,4 @@ pageviewrawdata <- rbind(pageviewrawdata, temp_data)
 ## Changer le nom des colonnes
 colnames(pageviewrawdata) <- c("path", "date", "view", "user", "userview",
                                "duration", "event")
+
