@@ -132,185 +132,244 @@ ModeOpenQuestion(CPSIMPISS, "cps21_imp_iss", 10)
 
 ## Croisement avec Government Satisfaction
 CPSIMPISS <- cbind(CPSIMPISS, GovernmentSatisfaction = CES21RAW$cps21_fed_gov_sat)
+
 GOVSAT <- CPSIMPISS %>%
+  filter(!is.na(GovernmentSatisfaction) & GovernmentSatisfaction != 5) %>%
+  mutate(
+    GovernmentSatisfaction = factor(
+      GovernmentSatisfaction,
+      labels = c("Very", "Fairly", "Not very", "Not at all")
+    )
+  ) %>%
   group_by(GovernmentSatisfaction) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
-    N_Agriculture = sum(`Public Lands & Agriculture` != 0),
     N_Education = sum(`Education` != 0),
     N_Environnement = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
-    N_International = sum(`International Affairs & Defense` != 0),
     N_Government = sum(`Governments & Governance` != 0),
-    N_Culture = sum(`Culture & Nationalism` != 0),
     N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
   ) %>%
   mutate(
-    P_Economy = sprintf("%.2f%%", 100 * N_Economy / sum(N_Economy)),
-    P_Health = sprintf("%.2f%%", 100 * N_Health / sum(N_Health)),
-    P_Agriculture = sprintf("%.2f%%", 100 * N_Agriculture / sum(N_Agriculture)),
-    P_Education = sprintf("%.2f%%", 100 * N_Education / sum(N_Education)),
-    P_Environnement = sprintf("%.2f%%", 100 * N_Environnement / sum(N_Environnement)),
-    P_Immigration = sprintf("%.2f%%", 100 * N_Immigration / sum(N_Immigration)),
-    P_LawCrime = sprintf("%.2f%%", 100 * N_LawCrime / sum(N_LawCrime)),
-    P_International = sprintf("%.2f%%", 100 * N_International / sum(N_International)),
-    P_Government = sprintf("%.2f%%", 100 * N_Government / sum(N_Government)),
-    P_Culture = sprintf("%.2f%%", 100 * N_Culture / sum(N_Culture)),
-    P_Rights = sprintf("%.2f%%", 100 * N_Rights / sum(N_Rights))
+   Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+   Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+   Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+   Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+   Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+   LawCrime = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+   Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+   Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
   ) %>%
   select(
     GovernmentSatisfaction,
-    N_Economy, P_Economy,
-    N_Health, P_Health,
-    N_Agriculture, P_Agriculture,
-    N_Education, P_Education,
-    N_Environnement, P_Environnement,
-    N_Immigration, P_Immigration,
-    N_LawCrime, P_LawCrime,
-    N_International, P_International,
-    N_Government, P_Government,
-    N_Culture, P_Culture,
-    N_Rights, P_Rights
+    Economy, Health, Education, Environnement, Immigration,
+    LawCrime, Government, Rights
   )
+
+GOVSATLONG <- GOVSAT %>%
+  gather(key, value, -GovernmentSatisfaction) %>%
+  mutate(value = as.numeric(value))
+
+
+ggplot(GOVSATLONG, aes(x = as.factor(GovernmentSatisfaction), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Satisfaction Level", y = "Percentage (%)", title = "How satisfied are you with the performance of the federal
+government under Justin Trudeau?") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    legend.position = "none",
+    axis.text = element_text(size = 10)) +
+  scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20))
 
 ## Croisement avec Democracy Satisfaction
 CPSIMPISS <- cbind(CPSIMPISS, DemocracySatisfaction = CES21RAW$cps21_demsat)
 DEMSAT <- CPSIMPISS %>%
+  filter(!is.na(DemocracySatisfaction) & DemocracySatisfaction != 5) %>%
+  mutate(
+    DemocracySatisfaction = factor(
+      DemocracySatisfaction,
+      labels = c("Very", "Fairly", "Not very", "Not at all")
+     )
+    ) %>%
   group_by(DemocracySatisfaction) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
-    N_Agriculture = sum(`Public Lands & Agriculture` != 0),
     N_Education = sum(`Education` != 0),
     N_Environnement = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
-    N_International = sum(`International Affairs & Defense` != 0),
     N_Government = sum(`Governments & Governance` != 0),
-    N_Culture = sum(`Culture & Nationalism` != 0),
     N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
   ) %>%
   mutate(
-    P_Economy = sprintf("%.2f%%", 100 * N_Economy / sum(N_Economy)),
-    P_Health = sprintf("%.2f%%", 100 * N_Health / sum(N_Health)),
-    P_Agriculture = sprintf("%.2f%%", 100 * N_Agriculture / sum(N_Agriculture)),
-    P_Education = sprintf("%.2f%%", 100 * N_Education / sum(N_Education)),
-    P_Environnement = sprintf("%.2f%%", 100 * N_Environnement / sum(N_Environnement)),
-    P_Immigration = sprintf("%.2f%%", 100 * N_Immigration / sum(N_Immigration)),
-    P_LawCrime = sprintf("%.2f%%", 100 * N_LawCrime / sum(N_LawCrime)),
-    P_International = sprintf("%.2f%%", 100 * N_International / sum(N_International)),
-    P_Government = sprintf("%.2f%%", 100 * N_Government / sum(N_Government)),
-    P_Culture = sprintf("%.2f%%", 100 * N_Culture / sum(N_Culture)),
-    P_Rights = sprintf("%.2f%%", 100 * N_Rights / sum(N_Rights))
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    LawCrime = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
   ) %>%
   select(
     DemocracySatisfaction,
-    N_Economy, P_Economy,
-    N_Health, P_Health,
-    N_Agriculture, P_Agriculture,
-    N_Education, P_Education,
-    N_Environnement, P_Environnement,
-    N_Immigration, P_Immigration,
-    N_LawCrime, P_LawCrime,
-    N_International, P_International,
-    N_Government, P_Government,
-    N_Culture, P_Culture,
-    N_Rights, P_Rights
+    Economy, Health, Education, Environnement, Immigration,
+    LawCrime, Government, Rights
   )
+
+DEMSATLONG <- DEMSAT %>%
+  gather(key, value, -DemocracySatisfaction) %>%
+  mutate(value = as.numeric(value))
+
+
+ggplot(DEMSATLONG, aes(x = as.factor(DemocracySatisfaction), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Satisfaction Level", y = "Percentage", title = "On the whole, are you very satisfied, fairly satisfied, not very satisfied,
+or not satisfied at all with the way democracy works in Canada?") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    legend.position = "none",
+    axis.text = element_text(size = 10)) +
+  scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20))
 
 ## Croisement avec Government Confusing
 CPSIMPISS <- cbind(CPSIMPISS, GovernmentConfusing = CES21RAW$cps21_govt_confusing)
 GOVCONFU <- CPSIMPISS %>%
+  filter(!is.na(GovernmentConfusing) & GovernmentConfusing != 5) %>%
   group_by(GovernmentConfusing) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
-    N_Agriculture = sum(`Public Lands & Agriculture` != 0),
     N_Education = sum(`Education` != 0),
     N_Environnement = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
-    N_International = sum(`International Affairs & Defense` != 0),
     N_Government = sum(`Governments & Governance` != 0),
-    N_Culture = sum(`Culture & Nationalism` != 0),
     N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
   ) %>%
   mutate(
-    P_Economy = sprintf("%.2f%%", 100 * N_Economy / sum(N_Economy)),
-    P_Health = sprintf("%.2f%%", 100 * N_Health / sum(N_Health)),
-    P_Agriculture = sprintf("%.2f%%", 100 * N_Agriculture / sum(N_Agriculture)),
-    P_Education = sprintf("%.2f%%", 100 * N_Education / sum(N_Education)),
-    P_Environnement = sprintf("%.2f%%", 100 * N_Environnement / sum(N_Environnement)),
-    P_Immigration = sprintf("%.2f%%", 100 * N_Immigration / sum(N_Immigration)),
-    P_LawCrime = sprintf("%.2f%%", 100 * N_LawCrime / sum(N_LawCrime)),
-    P_International = sprintf("%.2f%%", 100 * N_International / sum(N_International)),
-    P_Government = sprintf("%.2f%%", 100 * N_Government / sum(N_Government)),
-    P_Culture = sprintf("%.2f%%", 100 * N_Culture / sum(N_Culture)),
-    P_Rights = sprintf("%.2f%%", 100 * N_Rights / sum(N_Rights))
+    P_Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    P_Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    P_Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    P_Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    P_Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    P_LawCrime = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    P_Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    P_Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
   ) %>%
   select(
     GovernmentConfusing,
-    N_Economy, P_Economy,
-    N_Health, P_Health,
-    N_Agriculture, P_Agriculture,
-    N_Education, P_Education,
-    N_Environnement, P_Environnement,
-    N_Immigration, P_Immigration,
-    N_LawCrime, P_LawCrime,
-    N_International, P_International,
-    N_Government, P_Government,
-    N_Culture, P_Culture,
-    N_Rights, P_Rights
+    P_Economy, P_Health, P_Education, P_Environnement, P_Immigration,
+    P_LawCrime, P_Government, P_Rights
   )
+GOVCONFULONG <- GOVCONFU %>%
+  gather(key, value, -GovernmentConfusing) %>%
+  mutate(value = as.numeric(value))
+
+
+ggplot(GOVCONFULONG, aes(x = as.factor(GovernmentConfusing), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Control Variable", y = "Value", title = "Faceted Bar Graph") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    axis.text = element_text(size = 10),
+    axis.text.x = element_text(angle = 65, hjust=0.9)) +
+  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 10))
+
 ## Croisement avec Liberal Promises (1 = DISAGREE, 4 = AGREE)
 CPSIMPISS <- cbind(CPSIMPISS, LiberalPromises = CES21RAW$cps21_lib_promises)
 LIBPRO <- CPSIMPISS %>%
-  filter(!is.na(LiberalPromises)) %>%
+  filter(!is.na(LiberalPromises) & LiberalPromises != 5) %>%
+  mutate(
+    LiberalPromises = factor(
+      LiberalPromises,
+      labels = c("Strongly Disagree", "Somewhat Disagree", "Somewhat Agree", "Strongly Agree")
+    )
+  ) %>%
   group_by(LiberalPromises) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
-    N_Agriculture = sum(`Public Lands & Agriculture` != 0),
     N_Education = sum(`Education` != 0),
     N_Environnement = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
-    N_International = sum(`International Affairs & Defense` != 0),
     N_Government = sum(`Governments & Governance` != 0),
-    N_Culture = sum(`Culture & Nationalism` != 0),
     N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
   ) %>%
   mutate(
-    P_Economy = sprintf("%.2f%%", 100 * N_Economy / sum(N_Economy)),
-    P_Health = sprintf("%.2f%%", 100 * N_Health / sum(N_Health)),
-    P_Agriculture = sprintf("%.2f%%", 100 * N_Agriculture / sum(N_Agriculture)),
-    P_Education = sprintf("%.2f%%", 100 * N_Education / sum(N_Education)),
-    P_Environnement = sprintf("%.2f%%", 100 * N_Environnement / sum(N_Environnement)),
-    P_Immigration = sprintf("%.2f%%", 100 * N_Immigration / sum(N_Immigration)),
-    P_LawCrime = sprintf("%.2f%%", 100 * N_LawCrime / sum(N_LawCrime)),
-    P_International = sprintf("%.2f%%", 100 * N_International / sum(N_International)),
-    P_Government = sprintf("%.2f%%", 100 * N_Government / sum(N_Government)),
-    P_Culture = sprintf("%.2f%%", 100 * N_Culture / sum(N_Culture)),
-    P_Rights = sprintf("%.2f%%", 100 * N_Rights / sum(N_Rights))
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    LawCrime = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
   ) %>%
   select(
     LiberalPromises,
-    N_Economy, P_Economy,
-    N_Health, P_Health,
-    N_Agriculture, P_Agriculture,
-    N_Education, P_Education,
-    N_Environnement, P_Environnement,
-    N_Immigration, P_Immigration,
-    N_LawCrime, P_LawCrime,
-    N_International, P_International,
-    N_Government, P_Government,
-    N_Culture, P_Culture,
-    N_Rights, P_Rights
+    Economy,
+    Health,
+    Education,
+    Environnement,
+    Immigration,
+    LawCrime,
+    Government,
+    Rights
   )
 
-# Cleaning de cps21_imp_iss : Now we'd like to ask you some questions about the recent federal election. What was the main issue in the campaign?
+LIBPROLONG <- LIBPRO %>%
+  gather(key, value, -LiberalPromises) %>%
+  mutate(value = as.numeric(value))
+
+
+ggplot(LIBPROLONG, aes(x = as.factor(LiberalPromises), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Agreement Level", y = "Percentage", title = "Justin Trudeau kept the election promises he made in 2019.") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    axis.text = element_text(size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 65, hjust=0.9)) +
+  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 20))
+
+
+
+#### TEST DE CLEANING POUR LES PES  --> non-concluant
+
+# Cleaning de pes21_mostimpissue : Now we'd like to ask you some questions about the recent federal election. What was the main issue in the campaign?
 
 PESIMPISS <- FilterOpenQuestion2(CES21RAW, "pes21_mostimpissue", c("taxes", "taxation", "over taxation", "tax the rich", "economy", "economie", "work", "housing affordability",
                                                                    "housing", "cost of living", "affordable housing", "leconomie", "economic recovery", "jobs", "deficit",
@@ -471,3 +530,9 @@ PolTrust <- PESIMPISS %>%
     N_Culture, P_Culture,
     N_Rights, P_Rights
   )
+
+
+
+
+file_path <- file.path(getwd(), "Cleaning.R")
+write.csv(DEMSAT, file = file_path, row.names = FALSE)
