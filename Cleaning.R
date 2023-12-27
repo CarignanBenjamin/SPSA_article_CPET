@@ -131,8 +131,8 @@ ModeOpenQuestion(CPSIMPISS, "cps21_imp_iss", 10)
 ### Les analyses ont été arrêtés à partir de 3 occurences d'une même réponse car autrement ce serait trop time consuming.
 
 ## Croisement avec Government Satisfaction
-IMPISS <- cbind(IMPISS, GovernmentSatisfaction = CES21RAW$cps21_fed_gov_sat)
-GOVSAT <- IMPISS %>%
+CPSIMPISS <- cbind(CPSIMPISS, GovernmentSatisfaction = CES21RAW$cps21_fed_gov_sat)
+GOVSAT <- CPSIMPISS %>%
   group_by(GovernmentSatisfaction) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
@@ -176,8 +176,8 @@ GOVSAT <- IMPISS %>%
   )
 
 ## Croisement avec Democracy Satisfaction
-IMPISS <- cbind(IMPISS, DemocracySatisfaction = CES21RAW$cps21_demsat)
-DEMSAT <- IMPISS %>%
+CPSIMPISS <- cbind(CPSIMPISS, DemocracySatisfaction = CES21RAW$cps21_demsat)
+DEMSAT <- CPSIMPISS %>%
   group_by(DemocracySatisfaction) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
@@ -221,8 +221,8 @@ DEMSAT <- IMPISS %>%
   )
 
 ## Croisement avec Government Confusing
-IMPISS <- cbind(IMPISS, GovernmentConfusing = CES21RAW$cps21_govt_confusing)
-GOVCONFU <- IMPISS %>%
+CPSIMPISS <- cbind(CPSIMPISS, GovernmentConfusing = CES21RAW$cps21_govt_confusing)
+GOVCONFU <- CPSIMPISS %>%
   group_by(GovernmentConfusing) %>%
   summarize(
     N_Economy = sum(`Economy & Labour` != 0),
@@ -265,8 +265,8 @@ GOVCONFU <- IMPISS %>%
     N_Rights, P_Rights
   )
 ## Croisement avec Liberal Promises (1 = DISAGREE, 4 = AGREE)
-IMPISS <- cbind(IMPISS, LiberalPromises = CES21RAW$cps21_lib_promises)
-LIBPRO <- IMPISS %>%
+CPSIMPISS <- cbind(CPSIMPISS, LiberalPromises = CES21RAW$cps21_lib_promises)
+LIBPRO <- CPSIMPISS %>%
   filter(!is.na(LiberalPromises)) %>%
   group_by(LiberalPromises) %>%
   summarize(
