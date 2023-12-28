@@ -28,8 +28,14 @@ source("ModeOpenQuestion.R")
 #      "pes21_foreign", "pes21_emb_satif", "pes21_populism_2",
 #      "pes21_populism_7", "pes21_trust"
 
-CES21RAW <- data.frame(read_dta("_SharedFolder_CPET//2021 Canadian Election Study v1.0.dta", col_select = c("cps21_imp_iss", "cps21_demsat", "cps21_fed_gov_sat", "cps21_govt_confusing",
-                                                                                        "cps21_lib_promises", "pes21_mostimpissue", "pes21_populism_4")))
+CES21RAW <- data.frame(
+  read_dta("_SharedFolder_CPET//2021 Canadian Election Study v1.0.dta",
+           col_select = c("cps21_imp_iss", "cps21_demsat", "cps21_fed_gov_sat",
+                          "cps21_govt_confusing", "cps21_lib_promises",
+                          "pes21_dem_sat", "pes21_keepromises",
+                          "pes21_govtcare","pes21_conf_inst1_1",
+                          "pes21_populism_3", "pes21_populism_4",
+                          "pes21_populism_8")))
 
 ### Cleaning de cps21_imp_iss
 
@@ -173,8 +179,6 @@ GOVSAT <- CPSIMPISS %>%
     "Law & Crime", Government, Rights
   )
 
-
-
 ## Croisement avec Democracy Satisfaction
 CPSIMPISS <- cbind(CPSIMPISS, DemocracySatisfaction = CES21RAW$cps21_demsat)
 DEMSAT <- CPSIMPISS %>%
@@ -249,6 +253,81 @@ LIBPRO <- CPSIMPISS %>%
     Government, Rights
   )
 
+## Croisement avec Political parties keep promises
+CPSIMPISS <- cbind(CPSIMPISS, PoliticiansPromises = CES21RAW$pes21_govtcare)
+POLPRO <- CPSIMPISS %>%
+  filter(!is.na(PoliticiansPromises) & PoliticiansPromises != 6 & PoliticiansPromises != 5) %>%
+  mutate(
+    PoliticiansPromises = factor(
+      PoliticiansPromises,
+      labels = c("Most of the time", "Some of the time", "Hardly ever ", "Never")
+    )
+  ) %>%
+  group_by(PoliticiansPromises) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    PoliticiansPromises,
+    Economy, Health, Education, Environnement, Immigration, "Law & Crime",
+    Government, Rights
+  )
+
+
+## Croisement avec Governement Care
+CPSIMPISS <- cbind(CPSIMPISS, GovernementCare = CES21RAW$pes21_keepromises)
+GOVCARE <- CPSIMPISS %>%
+  filter(!is.na(GovernementCare) & GovernementCare != 6) %>%
+  mutate(
+    GovernementCare = factor(
+      GovernementCare,
+      labels = c("Strongly disagree", "Somewhat disagree", "Neither agree nor disagree", "Somewhat agree", "Strongly agree")
+    )
+  ) %>%
+  group_by(GovernementCare) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    GovernementCare,
+    Economy, Health, Education, Environnement, Immigration, "Law & Crime",
+    Government, Rights
+  )
+
 ### GRAPHIQUES
 ## Graphique Liberal keeps promises
 LIBPROLONG <- LIBPRO %>%
@@ -257,7 +336,7 @@ LIBPROLONG <- LIBPRO %>%
 ggplot(LIBPROLONG, aes(x = as.factor(LiberalPromises), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Agreement Level", y = "Percentage", title = "Justin Trudeau kept the election promises he made in 2019.") +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "Justin Trudeau kept the election promises he made in 2019.") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +
@@ -278,7 +357,7 @@ DEMSATLONG <- DEMSAT %>%
 ggplot(DEMSATLONG, aes(x = as.factor(DemocracySatisfaction), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Satisfaction Level", y = "Percentage", title = "On the whole, are you very satisfied, fairly satisfied, not very satisfied,
+  labs(x = "Satisfaction Level", y = "Percentage (%) of respondants for each main issue", title = "On the whole, are you very satisfied, fairly satisfied, not very satisfied,
 or not satisfied at all with the way democracy works in Canada?") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
@@ -290,7 +369,8 @@ or not satisfied at all with the way democracy works in Canada?") +
     axis.title.y = element_text(size = 10, hjust = 0.7),
     legend.position = "none",
     axis.text = element_text(size = 10)) +
-  scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20))
+scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20)) +
+  scale_x_discrete(limits = rev(levels(DEMSATLONG$DemocracySatisfaction)))
 
 ## Graphique satisfaction gouvernementale
 GOVSATLONG <- GOVSAT %>%
@@ -299,7 +379,7 @@ GOVSATLONG <- GOVSAT %>%
 ggplot(GOVSATLONG, aes(x = as.factor(GovernmentSatisfaction), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Satisfaction Level", y = "Percentage (%)", title = "How satisfied are you with the performance of the federal
+  labs(x = "Satisfaction Level", y = "Percentage (%) of respondants for each main issue", title = "How satisfied are you with the performance of the federal
 government under Justin Trudeau?") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
@@ -311,10 +391,54 @@ government under Justin Trudeau?") +
     axis.title.y = element_text(size = 10, hjust = 0.7),
     legend.position = "none",
     axis.text = element_text(size = 10)) +
-  scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20))
+  scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20))+
+  scale_x_discrete(limits = rev(levels(DEMSATLONG$DemocracySatisfaction)))
+
+## Graphique Politicians keep promises
+POLPROLONG <- POLPRO %>%
+  gather(key, value, -PoliticiansPromises) %>%
+  mutate(value = as.numeric(value))
+ggplot(POLPROLONG, aes(x = as.factor(PoliticiansPromises), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "Do political parties keep their election promises?") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    axis.text = element_text(size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust=0.9)) +
+  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 20))
+
+## Graphiques Government Care
+
+GOVCARELONG <- GOVCARE %>%
+  gather(key, value, -GovernementCare) %>%
+  mutate(value = as.numeric(value))
+ggplot(GOVCARELONG, aes(x = as.factor(GovernementCare), y = value, fill = key)) +
+  geom_bar(stat = "identity", position = "dodge", color = "white") +
+  facet_wrap(~ key, scales = "free_y", ncol = 2) +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "The government does not care much about what people like me think.") +
+  geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
+            position = position_dodge(0.9),
+            size = 2.5) +
+  clessnverse::theme_clean_light(base_size = 15) +
+  theme(
+    plot.title = element_text(size = 15, hjust = 0.5),
+    axis.title.x = element_text(size = 12, hjust = 0.5),
+    axis.title.y = element_text(size = 10, hjust = 0.7),
+    axis.text = element_text(size = 10),
+    legend.position = "none",
+    axis.text.x = element_text(angle = 20, hjust=0.9)) +
+  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 20))
 
 
-### Exportation des données
+### Exportation des données À REVOIR
 
 file_path <- file.path(getwd(), "Cleaning.R")
 write.csv(DEMSAT, file = file_path, row.names = FALSE)
