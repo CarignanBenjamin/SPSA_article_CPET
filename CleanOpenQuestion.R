@@ -14,5 +14,3 @@ CleanOpenQuestion <- function(pattern) {
   }
   return(result)
 }
-CleanOpenQuestion("info31")
-
