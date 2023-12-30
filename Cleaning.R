@@ -5,6 +5,8 @@ library(foreign)
 library(tidyverse)
 library(haven)
 library(readstata13)
+library(ggtext)
+library(psych)
 source("BindOpenQuestion.R")
 source("CleanOpenQuestion.R")
 source("FilterOpenQuestion.R")
@@ -28,7 +30,7 @@ source("ModeOpenQuestion.R")
 #      "pes21_foreign", "pes21_emb_satif", "pes21_populism_2",
 #      "pes21_populism_7", "pes21_trust"
 
-CES21RAW <- data.frame(
+CES21 <- data.frame(
   read_dta("_SharedFolder_CPET//2021 Canadian Election Study v1.0.dta",
            col_select = c("cps21_imp_iss", "cps21_demsat", "cps21_fed_gov_sat",
                           "cps21_govt_confusing", "cps21_lib_promises",
@@ -45,7 +47,7 @@ CES21RAW <- data.frame(
 # *** seule. Une fois que IMPISS est dans l'environnement, on peut rouler tout
 # *** le bloc d'un coup.
 
-CPSIMPISS <- FilterOpenQuestion2(CES21RAW, "cps21_imp_iss",  c("taxes", "taxation", "over taxation", "tax the rich", "economy", "economie", "work", "housing affordability",
+CPSIMPISS <- FilterOpenQuestion2(CES21, "cps21_imp_iss",  c("taxes", "taxation", "over taxation", "tax the rich", "economy", "economie", "work", "housing affordability",
                                                                "housing", "cost of living", "affordable housing", "leconomie", "economic recovery", "jobs", "deficit",
                                                                "finance", "l'economie", "the economy", "wages", "labour", "labor", "income inequality", "income",
                                                                "affordability", "income equality", "budget", "debt", "poverty", "la dette", "employment", "homelessness",
@@ -140,9 +142,17 @@ ModeOpenQuestion(CPSIMPISS, "cps21_imp_iss", 10)
 # analyses ont été arrêtés à partir de 3 occurences d'une même réponse car
 # autrement ce serait trop time consuming.
 
-### Croisement des variables
+
+
+################################################################################
+########################### Croisement des variables ###########################
+################################################################################
+
+#### CAMPAIGN PERIOD SURVEY
 
 ## Croisement avec Government Satisfaction
+# How satisfied are you with the performance of the federal government under Justin Trudeau?
+
 CPSIMPISS <- cbind(CPSIMPISS, GovernmentSatisfaction = CES21RAW$cps21_fed_gov_sat)
 GOVSAT <- CPSIMPISS %>%
   filter(!is.na(GovernmentSatisfaction) & GovernmentSatisfaction != 5) %>%
@@ -157,7 +167,7 @@ GOVSAT <- CPSIMPISS %>%
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
     N_Education = sum(`Education` != 0),
-    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
     N_Government = sum(`Governments & Governance` != 0),
@@ -167,7 +177,7 @@ GOVSAT <- CPSIMPISS %>%
    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
-   Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+   Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
@@ -175,11 +185,12 @@ GOVSAT <- CPSIMPISS %>%
   ) %>%
   select(
     GovernmentSatisfaction,
-    Economy, Health, Education, Environnement, Immigration,
+    Economy, Health, Education, Environment, Immigration,
     "Law & Crime", Government, Rights
   )
 
 ## Croisement avec Democracy Satisfaction
+#  On the whole, how satisfied are you with the way democracy works in Canada?
 CPSIMPISS <- cbind(CPSIMPISS, DemocracySatisfaction = CES21RAW$cps21_demsat)
 DEMSAT <- CPSIMPISS %>%
   filter(!is.na(DemocracySatisfaction) & DemocracySatisfaction != 5) %>%
@@ -194,7 +205,7 @@ DEMSAT <- CPSIMPISS %>%
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
     N_Education = sum(`Education` != 0),
-    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
     N_Government = sum(`Governments & Governance` != 0),
@@ -204,7 +215,7 @@ DEMSAT <- CPSIMPISS %>%
     Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
     Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
     Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
-    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
     Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
     "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
     Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
@@ -212,11 +223,12 @@ DEMSAT <- CPSIMPISS %>%
   ) %>%
   select(
     DemocracySatisfaction,
-    Economy, Health, Education, Environnement, Immigration,
+    Economy, Health, Education, Environment, Immigration,
     "Law & Crime", Government, Rights
   )
 
 ## Croisement avec Liberal Promises (1 = DISAGREE, 4 = AGREE)
+# Justin Trudeau kept the election promises he made in 2019.
 CPSIMPISS <- cbind(CPSIMPISS, LiberalPromises = CES21RAW$cps21_lib_promises)
 LIBPRO <- CPSIMPISS %>%
   filter(!is.na(LiberalPromises) & LiberalPromises != 5) %>%
@@ -231,17 +243,17 @@ LIBPRO <- CPSIMPISS %>%
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
     N_Education = sum(`Education` != 0),
-    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
     N_Government = sum(`Governments & Governance` != 0),
     N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
   ) %>%
   mutate(
-    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    "Economy (N = 4316)" = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
     Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
     Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
-    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
     Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
     "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
     Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
@@ -249,12 +261,15 @@ LIBPRO <- CPSIMPISS %>%
   ) %>%
   select(
     LiberalPromises,
-    Economy, Health, Education, Environnement, Immigration, "Law & Crime",
+    "Economy (N = 4316)", Health, Education, Environment, Immigration, "Law & Crime",
     Government, Rights
   )
 
+#### POST ELECTORAL SURVEY
+
 ## Croisement avec Political parties keep promises
-CPSIMPISS <- cbind(CPSIMPISS, PoliticiansPromises = CES21RAW$pes21_govtcare)
+# Do political parties keep their election promises?
+CPSIMPISS <- cbind(CPSIMPISS, PoliticiansPromises = CES21RAW$pes21_keepromises)
 POLPRO <- CPSIMPISS %>%
   filter(!is.na(PoliticiansPromises) & PoliticiansPromises != 6 & PoliticiansPromises != 5) %>%
   mutate(
@@ -268,7 +283,7 @@ POLPRO <- CPSIMPISS %>%
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
     N_Education = sum(`Education` != 0),
-    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
     N_Government = sum(`Governments & Governance` != 0),
@@ -278,7 +293,7 @@ POLPRO <- CPSIMPISS %>%
     Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
     Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
     Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
-    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
     Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
     "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
     Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
@@ -286,13 +301,14 @@ POLPRO <- CPSIMPISS %>%
   ) %>%
   select(
     PoliticiansPromises,
-    Economy, Health, Education, Environnement, Immigration, "Law & Crime",
+    Economy, Health, Education, Environment, Immigration, "Law & Crime",
     Government, Rights
   )
 
 
 ## Croisement avec Governement Care
-CPSIMPISS <- cbind(CPSIMPISS, GovernementCare = CES21RAW$pes21_keepromises)
+# The government does not care much about what people like me think.
+CPSIMPISS <- cbind(CPSIMPISS, GovernementCare = CES21RAW$pes21_govtcare)
 GOVCARE <- CPSIMPISS %>%
   filter(!is.na(GovernementCare) & GovernementCare != 6) %>%
   mutate(
@@ -306,7 +322,7 @@ GOVCARE <- CPSIMPISS %>%
     N_Economy = sum(`Economy & Labour` != 0),
     N_Health = sum(`Health & Social Services` != 0),
     N_Education = sum(`Education` != 0),
-    N_Environnement = sum(`Environment & Energy` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
     N_Immigration = sum(`Immigration` != 0),
     N_LawCrime = sum(`Law & Crime` != 0),
     N_Government = sum(`Governments & Governance` != 0),
@@ -316,7 +332,7 @@ GOVCARE <- CPSIMPISS %>%
     Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
     Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
     Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
-    Environnement = sprintf("%.2f", 100 * N_Environnement / sum(N_Environnement)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
     Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
     "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
     Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
@@ -324,19 +340,235 @@ GOVCARE <- CPSIMPISS %>%
   ) %>%
   select(
     GovernementCare,
-    Economy, Health, Education, Environnement, Immigration, "Law & Crime",
+    Economy, Health, Education, Environment, Immigration, "Law & Crime",
     Government, Rights
   )
 
-### GRAPHIQUES
+## Croisement avec PES Democracy Satisfaction
+# On the whole, are you very satisfied, fairly satisfied, not very satisfied,
+# or not satisfied at all with the way democracy works in Canada?
+CPSIMPISS <- cbind(CPSIMPISS, DemocracySatisfaction2 = CES21RAW$pes21_dem_sat)
+DEMSAT2 <- CPSIMPISS %>%
+  filter(!is.na(DemocracySatisfaction2) & DemocracySatisfaction2 != 5) %>%
+  mutate(
+    DemocracySatisfaction2 = factor(
+      DemocracySatisfaction2,
+      labels = c("Very", "Fairly", "Not very", "Not at all")
+    )
+  ) %>%
+  group_by(DemocracySatisfaction2) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    DemocracySatisfaction2,
+    Economy, Health, Education, Environment, Immigration,
+    "Law & Crime", Government, Rights
+  )
+
+## Croisement avec Confiance Institutions (federal gov)
+## Please indicate how much confidence you have in the following:The federal government
+CPSIMPISS <- cbind(CPSIMPISS, ConianceFederalGov = CES21RAW$pes21_conf_inst1_1)
+FEDGOVCONF <- CPSIMPISS %>%
+  filter(!is.na(ConianceFederalGov) & ConianceFederalGov != 5) %>%
+  mutate(
+    ConianceFederalGov = factor(
+      ConianceFederalGov,
+      labels = c("A great deal", "Quite a lot", "Not very much", "None at all")
+    )
+  ) %>%
+  group_by(ConianceFederalGov) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    ConianceFederalGov,
+    Economy, Health, Education, Environment, Immigration,
+    "Law & Crime", Government, Rights
+  )
+
+## Croisement avec Populism_3
+## Most politicians do not care about the people.
+CPSIMPISS <- cbind(CPSIMPISS, Politiciansnocare = CES21RAW$pes21_populism_3)
+POPULISM3 <- CPSIMPISS %>%
+  filter(!is.na(Politiciansnocare) & Politiciansnocare != 6) %>%
+  mutate(
+    Politiciansnocare = factor(
+      Politiciansnocare,
+      labels = c("Strongly Disagree", "Somewhat Disagree", "Neither agree nor disagree", "Somewhat Agree", "Strongly Agree")
+    )
+  ) %>%
+  group_by(Politiciansnocare) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    Politiciansnocare,
+    Economy, Health, Education, Environment, Immigration,
+    "Law & Crime", Government, Rights
+  )
+
+## Croisement avec Populism_4
+## Most politicians are trustworthy.
+CPSIMPISS <- cbind(CPSIMPISS, Politicianstrustworthy = CES21RAW$pes21_populism_4)
+POPULISM4 <- CPSIMPISS %>%
+  filter(!is.na(Politicianstrustworthy) & Politicianstrustworthy != 6) %>%
+  mutate(
+    Politicianstrustworthy = factor(
+      Politicianstrustworthy,
+      labels = c("Strongly Disagree", "Somewhat Disagree", "Neither agree nor disagree", "Somewhat Agree", "Strongly Agree")
+    )
+  ) %>%
+  group_by(Politicianstrustworthy) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    Politicianstrustworthy,
+    Economy, Health, Education, Environment, Immigration,
+    "Law & Crime", Government, Rights
+  )
+
+## Croisement avec Populism_8
+## The people, and not politicians, should make our most important policy decisions.
+CPSIMPISS <- cbind(CPSIMPISS, Peopledeciders = CES21RAW$pes21_populism_8)
+POPULISM8 <- CPSIMPISS %>%
+  filter(!is.na(Peopledeciders) & Peopledeciders != 6) %>%
+  mutate(
+    Peopledeciders = factor(
+      Peopledeciders,
+      labels = c("Strongly Disagree", "Somewhat Disagree", "Neither agree nor disagree", "Somewhat Agree", "Strongly Agree")
+    )
+  ) %>%
+  group_by(Peopledeciders) %>%
+  summarize(
+    N_Economy = sum(`Economy & Labour` != 0),
+    N_Health = sum(`Health & Social Services` != 0),
+    N_Education = sum(`Education` != 0),
+    N_Environment = sum(`Environment & Energy` != 0),
+    N_Immigration = sum(`Immigration` != 0),
+    N_LawCrime = sum(`Law & Crime` != 0),
+    N_Government = sum(`Governments & Governance` != 0),
+    N_Rights = sum(`Rights, Liberties, Minorities & Discrimination` != 0)
+  ) %>%
+  mutate(
+    Economy = sprintf("%.2f", 100 * N_Economy / sum(N_Economy)),
+    Health = sprintf("%.2f", 100 * N_Health / sum(N_Health)),
+    Education = sprintf("%.2f", 100 * N_Education / sum(N_Education)),
+    Environment = sprintf("%.2f", 100 * N_Environment / sum(N_Environment)),
+    Immigration = sprintf("%.2f", 100 * N_Immigration / sum(N_Immigration)),
+    "Law & Crime" = sprintf("%.2f", 100 * N_LawCrime / sum(N_LawCrime)),
+    Government = sprintf("%.2f", 100 * N_Government / sum(N_Government)),
+    Rights = sprintf("%.2f", 100 * N_Rights / sum(N_Rights))
+  ) %>%
+  select(
+    Peopledeciders,
+    Economy, Health, Education, Environment, Immigration,
+    "Law & Crime", Government, Rights
+  )
+
+################################################################################
+################################## GRAPHIQUES ##################################
+################################################################################
+
+### Palette de couleurs
+
+#   Red: #FF0000
+#   Vermilion: #FF8B00
+#   Orange: #FFA500
+#   Amber: #FFEC38
+#   Yellow: #FFFF00
+#   Chartreuse: #7FFF00
+#   Green: #00FF00
+#   Teal: #008080
+#   Blue: #0000FF
+#   Violet: #8B00FF
+#   Purple: #800080
+#   Magenta: #FF00FF
+
+CAPPISSUECOLORS <- c("Economy (N = 4316)" = "#FFD200", "Health" = "#CC0066",
+                     "Education" = "#A64CA6", "Environment" = "#2E8A57",
+                     "Immigration" = "#E66C2C", "Law & Crime" = "#D9534F",
+                     "Government" = "#0099FF", "Rights" = "#6B66CC")
+
 ## Graphique Liberal keeps promises
 LIBPROLONG <- LIBPRO %>%
   gather(key, value, -LiberalPromises) %>%
   mutate(value = as.numeric(value))
+
 ggplot(LIBPROLONG, aes(x = as.factor(LiberalPromises), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
-  facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "Justin Trudeau kept the election promises he made in 2019.") +
+  facet_wrap(~ factor(key, levels = c("Economy (N = 4316)", "Health", "Environment", "Government",
+                            "Rights", "Education", "Immigration", "Law & Crime")), scales = "free_y", ncol = 2) +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondents for each main issue", title = "Justin Trudeau kept the election promises he made in 2019. \n (Based on main issue preference)") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +
@@ -348,7 +580,8 @@ ggplot(LIBPROLONG, aes(x = as.factor(LiberalPromises), y = value, fill = key)) +
     axis.text = element_text(size = 10),
     legend.position = "none",
     axis.text.x = element_text(angle = 20, hjust=0.9)) +
-  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 20))
+  scale_y_continuous(limits = c(0, 70), breaks = seq(0, 70, by = 20)) +
+  scale_fill_manual(values = CAPPISSUECOLORS)
 
 ## Graphique satisfaction démocratique
 DEMSATLONG <- DEMSAT %>%
@@ -357,8 +590,8 @@ DEMSATLONG <- DEMSAT %>%
 ggplot(DEMSATLONG, aes(x = as.factor(DemocracySatisfaction), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Satisfaction Level", y = "Percentage (%) of respondants for each main issue", title = "On the whole, are you very satisfied, fairly satisfied, not very satisfied,
-or not satisfied at all with the way democracy works in Canada?") +
+  labs(x = "Satisfaction Level", y = "Percentage (%) of respondents for each main issue", title = "On the whole, are you very satisfied, fairly satisfied, not very satisfied,
+or not satisfied at all with the way democracy works in Canada? (Based on main issue preference)") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +
@@ -379,8 +612,8 @@ GOVSATLONG <- GOVSAT %>%
 ggplot(GOVSATLONG, aes(x = as.factor(GovernmentSatisfaction), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Satisfaction Level", y = "Percentage (%) of respondants for each main issue", title = "How satisfied are you with the performance of the federal
-government under Justin Trudeau?") +
+  labs(x = "Satisfaction Level", y = "Percentage (%) of respondents for each main issue", title = "How satisfied are you with the performance of the federal
+government under Justin Trudeau? (Based on main issue preference)") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +
@@ -401,7 +634,7 @@ POLPROLONG <- POLPRO %>%
 ggplot(POLPROLONG, aes(x = as.factor(PoliticiansPromises), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "Do political parties keep their election promises?") +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondents for each main issue", title = "Do political parties keep their election promises? (Based on main issue preference)") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +
@@ -423,7 +656,7 @@ GOVCARELONG <- GOVCARE %>%
 ggplot(GOVCARELONG, aes(x = as.factor(GovernementCare), y = value, fill = key)) +
   geom_bar(stat = "identity", position = "dodge", color = "white") +
   facet_wrap(~ key, scales = "free_y", ncol = 2) +
-  labs(x = "Agreement Level", y = "Percentage (%) of respondants for each main issue", title = "The government does not care much about what people like me think.") +
+  labs(x = "Agreement Level", y = "Percentage (%) of respondents for each main issue", title = "The government does not care much about what people like me think. (Based on main issue preference)") +
   geom_text(aes(label = paste0(value, "%")), vjust = -0.5,
             position = position_dodge(0.9),
             size = 2.5) +

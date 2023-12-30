@@ -1,3 +1,124 @@
+# Cleaning pour analyse factorielle
+
+#### 0.1 Creating a clean empty dataframe ####
+#### 0.1 Creating a clean empty dataframe ####
+numRows <- nrow(CES21)
+CleanData <- data.frame(length = numeric(numRows))
+
+CleanData$DemSat <- NA
+CleanData$DemSat[CES21$cps21_demsat == 1] <- 1
+CleanData$DemSat[CES21$cps21_demsat == 2] <- 0.66
+CleanData$DemSat[CES21$cps21_demsat == 3] <- 0.33
+CleanData$DemSat[CES21$cps21_demsat == 4] <- 0
+CleanData$DemSat[CES21$cps21_demsat == 5] <- NA
+table(CleanData$DemSat)
+
+CleanData$FedGovSat <- NA
+CleanData$FedGovSat[CES21$cps21_fed_gov_sat == 1] <- 1
+CleanData$FedGovSat[CES21$cps21_fed_gov_sat == 2] <- 0.66
+CleanData$FedGovSat[CES21$cps21_fed_gov_sat == 3] <- 0.33
+CleanData$FedGovSat[CES21$cps21_fed_gov_sat == 4] <- 0
+CleanData$FedGovSat[CES21$cps21_fed_gov_sat == 5] <- NA
+table(CleanData$FedGovSat)
+
+CleanData$LibPro <- NA
+CleanData$LibPro[CES21$cps21_lib_promises == 1] <- 0
+CleanData$LibPro[CES21$cps21_lib_promises == 3] <- 0.33
+CleanData$LibPro[CES21$cps21_lib_promises == 2] <- 0.66
+CleanData$LibPro[CES21$cps21_lib_promises == 4] <- 1
+CleanData$LibPro[CES21$cps21_lib_promises == 5] <- NA
+table(CleanData$DemSat2)
+
+CleanData$DemSat2 <- NA
+CleanData$DemSat2[CES21$pes21_dem_sat == 1] <- 1
+CleanData$DemSat2[CES21$pes21_dem_sat == 3] <- 0.66
+CleanData$DemSat2[CES21$pes21_dem_sat == 2] <- 0.33
+CleanData$DemSat2[CES21$pes21_dem_sat == 4] <- 0
+CleanData$DemSat2[CES21$pes21_dem_sat == 5] <- NA
+table(CleanData$LibPro)
+
+CleanData$PolPro <- NA
+CleanData$PolPro[CES21$pes21_keepromises == 1] <- 1
+CleanData$PolPro[CES21$pes21_keepromises == 2] <- 0.75
+CleanData$PolPro[CES21$pes21_keepromises == 5] <- 0.5
+CleanData$PolPro[CES21$pes21_keepromises == 3] <- 0.25
+CleanData$PolPro[CES21$pes21_keepromises == 4] <- 0
+CleanData$PolPro[CES21$pes21_keepromises == 6] <- NA
+table(CleanData$PolPro)
+
+CleanData$GovCare <- NULL
+CleanData$GovCare[CES21$pes21_govtcare == 1] <- 0
+CleanData$GovCare[CES21$pes21_govtcare == 2] <- 0.25
+CleanData$GovCare[CES21$pes21_govtcare == 3] <- 0.5
+CleanData$GovCare[CES21$pes21_govtcare == 4] <- 0.75
+CleanData$GovCare[CES21$pes21_govtcare == 5] <- 1
+CleanData$GovCare[CES21$pes21_govtcare == 6] <- NA
+table(CleanData$GovCare)
+
+CleanData$FedGovConf <- NA
+CleanData$FedGovConf[CES21$pes21_conf_inst1_1 == 1] <- 1
+CleanData$FedGovConf[CES21$pes21_conf_inst1_1 == 2] <- 0.66
+CleanData$FedGovConf[CES21$pes21_conf_inst1_1 == 3] <- 0.33
+CleanData$FedGovConf[CES21$pes21_conf_inst1_1 == 4] <- 0
+CleanData$FedGovConf[CES21$pes21_conf_inst1_1 == 5] <- NA
+table(CleanData$FedGovConf)
+
+CleanData$Populism3 <- NULL
+CleanData$Populism3[CES21$pes21_populism_3 == 1] <- 0
+CleanData$Populism3[CES21$pes21_populism_3 == 2] <- 0.25
+CleanData$Populism3[CES21$pes21_populism_3 == 3] <- 0.5
+CleanData$Populism3[CES21$pes21_populism_3 == 4] <- 0.75
+CleanData$Populism3[CES21$pes21_populism_3 == 5] <- 1
+CleanData$Populism3[CES21$pes21_populism_3 == 6] <- NA
+table(CleanData$Populism3)
+
+CleanData$Populism4 <- NA
+CleanData$Populism4[CES21$pes21_populism_4 == 1] <- 0
+CleanData$Populism4[CES21$pes21_populism_4 == 2] <- 0.25
+CleanData$Populism4[CES21$pes21_populism_4 == 3] <- 0.5
+CleanData$Populism4[CES21$pes21_populism_4 == 4] <- 0.75
+CleanData$Populism4[CES21$pes21_populism_4 == 5] <- 1
+CleanData$Populism4[CES21$pes21_populism_4 == 6] <- NA
+table(CleanData$Populism4)
+
+CleanData$Populism8 <- NA
+CleanData$Populism8[CES21$pes21_populism_8 == 1] <- 0
+CleanData$Populism8[CES21$pes21_populism_8 == 2] <- 0.25
+CleanData$Populism8[CES21$pes21_populism_8 == 3] <- 0.5
+CleanData$Populism8[CES21$pes21_populism_8 == 4] <- 0.75
+CleanData$Populism8[CES21$pes21_populism_8 == 5] <- 1
+CleanData$Populism8[CES21$pes21_populism_8 == 6] <- NA
+table(CleanData$Populism8)
+
+CleanData$length <- NULL
+
+CleanData$Economy <- 0
+CleanData$Economy[CPSIMPISS$`Economy & Labour` != 0] <- 1
+CleanData$Health <- 0
+CleanData$Health[CPSIMPISS$`Health & Social Services` != 0] <- 1
+CleanData$Environment <- 0
+CleanData$Environment[CPSIMPISS$`Environment & Energy`!= 0] <- 1
+CleanData$Governance <- 0
+CleanData$Governance[CPSIMPISS$`Governments & Governance` != 0] <- 1
+CleanData$"Rights & Liberties" <- 0
+CleanData$"Rights & Liberties"[CPSIMPISS$`Rights, Liberties, Minorities & Discrimination` != 0] <- 1
+CleanData$Education <- 0
+CleanData$Education[CPSIMPISS$Education != 0] <- 1
+CleanData$Immigration <- 0
+CleanData$Immigration[CPSIMPISS$Immigration != 0] <- 1
+CleanData$"Law & Crime" <- 0
+CleanData$"Law & Crime"[CPSIMPISS$`Law & Crime` != 0] <- 1
+
+
+
+
+
+
+
+
+
+
+
 #### TEST DE CLEANING POUR LES PES  --> non-concluant
 
 # Cleaning de pes21_mostimpissue : Now we'd like to ask you some questions about the recent federal election. What was the main issue in the campaign?
@@ -161,3 +282,78 @@ PolTrust <- PESIMPISS %>%
     N_Culture, P_Culture,
     N_Rights, P_Rights
   )
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Test analyse factorielle
+
+
+
+
+
+
+
+
+AgencyScale <- na.omit(CCPIS[, c(
+  "sexrole_independent", "sexrole_passive", "sexrole_competitive",
+  "sexrole_easydecisions_rev", "sexrole_giveup", "sexrole_selfconfident",
+  "sexrole_inferior", "sexrole_underpressure")])
+AgencyCronbach <- round(as.numeric(psy::cronbach(AgencyScale)[3]), digits = 2)
+AgencyFactorAnalysis <- factanal(AgencyScale, factors = 1)
+AgencyVariableNames <- c(
+  "Very independent", "Very active", "Very competitive",
+  "Have difficulty making\ndecisions (reversed)", "Never give up easily",
+  "Very self confident", "Feel very superior", "Stand up well\nunder pressure")
+AgencyFactorLoadings <- AgencyFactorAnalysis$loadings[, 1]
+AgencyFirstEigenvalue <- round(eigen(cor(AgencyScale))$values[1], digits = 2)
+
+CCPIS$agentic <- (
+  CCPIS$sexrole_independent * AgencyFactorLoadings[1] +
+    CCPIS$sexrole_passive * AgencyFactorLoadings[2] +
+    CCPIS$sexrole_competitive * AgencyFactorLoadings[3] +
+    CCPIS$sexrole_easydecisions_rev * AgencyFactorLoadings[4] +
+    CCPIS$sexrole_giveup * AgencyFactorLoadings[5] +
+    CCPIS$sexrole_selfconfident * AgencyFactorLoadings[6] +
+    CCPIS$sexrole_inferior * AgencyFactorLoadings[7] +
+    CCPIS$sexrole_underpressure * AgencyFactorLoadings[8]) /
+  sum(AgencyFactorLoadings) # 0 = not agentic, 1 = agentic
+length(na.omit(CCPIS$agentic)) / nrow(CCPIS) * 100 # 72% available data
+
+
+
+
+
+
+
+ggplot(data.frame(AgencyVariableNames, AgencyFactorLoadings),
+       aes(x = AgencyVariableNames, y = AgencyFactorLoadings)) +
+  coord_flip() +
+  geom_bar(stat = "identity", colour = "black", fill = "black", linewidth = 1,
+           width = 0.4) +
+  geom_text(aes(label = as.character(round(AgencyFactorLoadings, digits = 2))),
+            vjust = 0.35, hjust = -0.3, family = "CM Roman") +
+  geom_hline(yintercept = 0.3, colour = "gray", linetype = "longdash") +
+  annotate("text", label = paste("Cronbach's alpha =", as.character(
+    AgencyCronbach)), x = 1.2, y = 0.85, size = 3.8, family = "CM Roman") +
+  annotate("text", label = paste("First eigenvalue =", as.character(
+    AgencyFirstEigenvalue)), x = 0.8, y = 0.85, size = 3.8,
+    family = "CM Roman") +
+  scale_y_continuous(name = "Factor loadings", limits = c(-0.1, 1),
+                     breaks = seq(-0.1, 1, by = 0.1)) +
+  xlab("") +
+  theme_linedraw() +
+  theme(axis.text.y = element_text(size = 14),
+        axis.title.x = element_text(hjust = 0.3, vjust = -0.17, size = 14),
+        panel.grid = element_blank(),
+        text = element_text(family = "CM Roman"))
+ggsave("_graphs/AgencyScale.pdf", width = 11, height = 4.25)
