@@ -1,0 +1,48 @@
+---
+title: "Brouillon Article CPET"
+author: "Benjamin Carignan"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Abstract 
+
+
+
+# Introduction
+
+
+
+# Click through rates pour prédire des comportements/attitudes
+
+
+# Click destination/reading choices led by emotions
+
+
+# Confiance politique en tant qu'émotion
+
+
+# Attention vers nouvelles/information negative/promesse rompue= manque de confiance/emotions négatives
+
+
+# Grouping par catégories (confiance politique par catégorie)
+
+
+# Data sets
+
+
+# Methodology
+
+
+# analyse
+
+
+# discussion
+
+
+# Conclusion
