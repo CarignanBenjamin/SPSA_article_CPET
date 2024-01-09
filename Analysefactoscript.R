@@ -466,7 +466,7 @@ TrustScale <- na.omit(CleanData[, c("DemSat", "FedGovSat", "LibPro", "DemSat2", 
 TrustCronbach <- round(as.numeric(psy::cronbach(TrustScale)[3]), digits = 2)
 TrustFactorAnalysis <- factanal(TrustScale, factors = 1)
 TrustVariableNames <- c(
-  "Satisfaction with democracy CPS", "Satisfaction with Trudeau government", "Trudeau kept his promises", "Satisfaction with democracy PES", "Parties keep their promises", "Government cares what I think",
+  "Satisfied with democracy CPS", "Satisfaction with Trudeau government", "Trudeau kept his promises", "Satisfied with democracy PES", "Parties keep their promises", "Government cares what I think",
   "Confidence in federal government", "Politicians care about the people", "Politicians are trustworthy","Politicians do not care only about the rich")
 TrustFactorLoadings <- TrustFactorAnalysis$loadings[, 1]
 TrustFirstEigenvalue <- round(eigen(cor(TrustScale))$values[1], digits = 2)
@@ -480,9 +480,9 @@ ggplot(data.frame(TrustVariableNames, TrustFactorLoadings),
             vjust = 0.35, hjust = -0.3, family = "CM Roman") +
   geom_hline(yintercept = 0.3, colour = "gray", linetype = "longdash") +
   annotate("text", label = paste("Cronbach's alpha =", as.character(
-    TrustCronbach)), x = 1.2, y = 0.95, size = 3, family = "CM Roman") +
+    TrustCronbach)), x = 1.2, y = 0.85, size = 3, family = "CM Roman") +
   annotate("text", label = paste("First eigenvalue =", as.character(
-    TrustFirstEigenvalue)), x = 0.8, y = 0.95, size = 3,
+    TrustFirstEigenvalue)), x = 0.8, y = 0.85, size = 3,
     family = "CM Roman") +
   scale_y_continuous(name = "Factor loadings", limits = c(-0.1, 1),
                      breaks = seq(-0.1, 1, by = 0.1)) +
@@ -491,32 +491,37 @@ ggplot(data.frame(TrustVariableNames, TrustFactorLoadings),
   theme(axis.text.y = element_text(size = 14),
         axis.title.x = element_text(hjust = 0.3, vjust = -0.17, size = 14),
         panel.grid = element_blank(),
-        text = element_text(family = "CM Roman"))
+        text = element_text(family = "CM Roman")) +
+  ggtitle("figure 1: Factorial analysis for the level of political trust in the CES")
 ggsave("_graphs/TrustScale.png", width = 11, height = 4.25)
 
 ## Analyse factorielle Sophistication Politique 1 => en bas du seuil de 3 : A,E,G (educ, NoSay, Knowledge1)
-SophieScale <- na.omit(CleanData[, c("educ","InterestPol" ,"InterestElec" ,"Confusing" ,"NoSay", "NewsTime", "Knowledge1", "Knowledge2", "Knowledge3", "Debatefr",
+SophieScale1 <- na.omit(CleanData[, c("educ","InterestPol" ,"InterestElec" ,"Confusing" ,"NoSay",
+                                      "NewsTime", "Knowledge1", "Knowledge2", "Knowledge3", "Debatefr",
                                      "Debatefr2", "Debateen", "CampaignAtt",
                                      "Discussion")])
-SophieCronbach <- round(as.numeric(psy::cronbach(SophieScale)[3]), digits = 2)
-SophieFactorAnalysis <- factanal(SophieScale, factors = 1)
-SophieVariableNames <- c(
-  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N")
-SophieFactorLoadings <- SophieFactorAnalysis$loadings[, 1]
-SophieFirstEigenvalue <- round(eigen(cor(SophieScale))$values[1], digits = 2)
+SophieCronbach1 <- round(as.numeric(psy::cronbach(SophieScale1)[3]), digits = 2)
+SophieFactorAnalysis1 <- factanal(SophieScale1, factors = 1)
+SophieVariableNames1 <- c(
+  "Is educated", "Interested in Politics", "Interested in Elections", "Not confused by politics",
+  "Has a say about the government", "Often watch news", "Knows my province PM's name", "Knows the minister of finance's name",
+  "Knows the Governor-General of Canada's name", "Watched the first french debate", "Watched the second french debate",
+  "Watched the english debate", "Paid a lot of attention to the campaign", "Often discuss politics with my family and friends")
+SophieFactorLoadings1 <- SophieFactorAnalysis1$loadings[, 1]
+SophieFirstEigenvalue1 <- round(eigen(cor(SophieScale1))$values[1], digits = 2)
 
-ggplot(data.frame(SophieVariableNames, SophieFactorLoadings),
-       aes(x = reorder(SophieVariableNames, SophieFactorLoadings), y = SophieFactorLoadings)) +
+ggplot(data.frame(SophieVariableNames1, SophieFactorLoadings1),
+       aes(x = reorder(SophieVariableNames1, SophieFactorLoadings1), y = SophieFactorLoadings1)) +
   coord_flip() +
   geom_bar(stat = "identity", colour = "black", fill = "black", linewidth = 0.9,
            width = 0.4) +
-  geom_text(aes(label = as.character(round(SophieFactorLoadings, digits = 2))),
+  geom_text(aes(label = as.character(round(SophieFactorLoadings1, digits = 2))),
             vjust = 0.35, hjust = -0.3, family = "CM Roman") +
   geom_hline(yintercept = 0.3, colour = "gray", linetype = "longdash") +
   annotate("text", label = paste("Cronbach's alpha =", as.character(
-    SophieCronbach)), x = 1.2, y = 0.95, size = 3, family = "CM Roman") +
+    SophieCronbach1)), x = 1.2, y = 0.85, size = 3, family = "CM Roman") +
   annotate("text", label = paste("First eigenvalue =", as.character(
-    SophieFirstEigenvalue)), x = 0.8, y = 0.95, size = 3,
+    SophieFirstEigenvalue1)), x = 0.8, y = 0.85, size = 3,
     family = "CM Roman") +
   scale_y_continuous(name = "Factor loadings", limits = c(-0.1, 1),
                      breaks = seq(-0.1, 1, by = 0.1)) +
@@ -525,33 +530,35 @@ ggplot(data.frame(SophieVariableNames, SophieFactorLoadings),
   theme(axis.text.y = element_text(size = 14),
         axis.title.x = element_text(hjust = 0.3, vjust = -0.17, size = 14),
         panel.grid = element_blank(),
-        text = element_text(family = "CM Roman"))
-ggsave("_graphs/SophieScale.png", width = 11, height = 4.25)
+        text = element_text(family = "CM Roman")) +
+  ggtitle("figure 2: First factorial analysis for the level of political sophistication in the CES")
+ggsave("_graphs/SophieScale1.png", width = 11, height = 4.25)
 
 ## Analyse factorielle Sophistication Politique 2 => en bas du seuil de 3 : Rien,Au moins 3,9.
 
-SophieScale <- na.omit(CleanData[, c("InterestPol", "InterestElec", "Confusing", "NewsTime", "Knowledge2", "Knowledge3", "Debatefr",
+SophieScale2 <- na.omit(CleanData[, c("InterestPol", "InterestElec", "Confusing", "NewsTime", "Knowledge2", "Knowledge3", "Debatefr",
                                      "Debatefr2", "Debateen", "CampaignAtt",
                                      "Discussion")])
-SophieCronbach <- round(as.numeric(psy::cronbach(SophieScale)[3]), digits = 2)
-SophieFactorAnalysis <- factanal(SophieScale, factors = 1)
-SophieVariableNames <- c(
-  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K")
-SophieFactorLoadings <- SophieFactorAnalysis$loadings[, 1]
-SophieFirstEigenvalue <- round(eigen(cor(SophieScale))$values[1], digits = 2)
+SophieCronbach2 <- round(as.numeric(psy::cronbach(SophieScale2)[3]), digits = 2)
+SophieFactorAnalysis2 <- factanal(SophieScale2, factors = 1)
+SophieVariableNames2 <- c(  "Interested in Politics", "Interested in Elections", "Not confused by politics", "Often watch news", "Knows the minister of finance's name",
+                           "Knows the Governor-General of Canada's name", "Watched the first french debate", "Watched the second french debate",
+                           "Watched the english debate", "Paid a lot of attention to the campaign", "Often discuss politics with my family and friends")
+SophieFactorLoadings2 <- SophieFactorAnalysis2$loadings[, 1]
+SophieFirstEigenvalue2 <- round(eigen(cor(SophieScale2))$values[1], digits = 2)
 
-ggplot(data.frame(SophieVariableNames, SophieFactorLoadings),
-       aes(x = reorder(SophieVariableNames, SophieFactorLoadings), y = SophieFactorLoadings)) +
+ggplot(data.frame(SophieVariableNames2, SophieFactorLoadings2),
+       aes(x = reorder(SophieVariableNames2, SophieFactorLoadings2), y = SophieFactorLoadings2)) +
   coord_flip() +
   geom_bar(stat = "identity", colour = "black", fill = "black", linewidth = 0.9,
            width = 0.4) +
-  geom_text(aes(label = as.character(round(SophieFactorLoadings, digits = 2))),
+  geom_text(aes(label = as.character(round(SophieFactorLoadings2, digits = 2))),
             vjust = 0.35, hjust = -0.3, family = "CM Roman") +
   geom_hline(yintercept = 0.3, colour = "gray", linetype = "longdash") +
   annotate("text", label = paste("Cronbach's alpha =", as.character(
-    SophieCronbach)), x = 1.2, y = 0.95, size = 3, family = "CM Roman") +
+    SophieCronbach2)), x = 1.2, y = 0.85, size = 3, family = "CM Roman") +
   annotate("text", label = paste("First eigenvalue =", as.character(
-    SophieFirstEigenvalue)), x = 0.8, y = 0.95, size = 3,
+    SophieFirstEigenvalue2)), x = 0.8, y = 0.85, size = 3,
     family = "CM Roman") +
   scale_y_continuous(name = "Factor loadings", limits = c(-0.1, 1),
                      breaks = seq(-0.1, 1, by = 0.1)) +
@@ -560,8 +567,9 @@ ggplot(data.frame(SophieVariableNames, SophieFactorLoadings),
   theme(axis.text.y = element_text(size = 14),
         axis.title.x = element_text(hjust = 0.3, vjust = -0.17, size = 14),
         panel.grid = element_blank(),
-        text = element_text(family = "CM Roman"))
-ggsave("_graphs/SophieScale.png", width = 11, height = 4.25)
+        text = element_text(family = "CM Roman")) +
+  ggtitle("figure 3: Second factorial analysis for the level of political sophistication in the CES")
+ggsave("_graphs/SophieScale2.png", width = 11, height = 4.25)
 
 
 ### CROISEMENT DES DONNÉES à retravailler
@@ -589,8 +597,8 @@ summary(CleanData$Trust)
 calculate_sophistication <- function(row) {
   if (sum(is.na(row)) <= 7) {
     # Perform element-wise multiplication for each variable and its loading
-    variable_contributions <- row * SophieFactorLoadings
-    return(sum(variable_contributions, na.rm = TRUE) / sum(SophieFactorLoadings, na.rm = TRUE))
+    variable_contributions <- row * SophieFactorLoadings2
+    return(sum(variable_contributions, na.rm = TRUE) / sum(SophieFactorLoadings2, na.rm = TRUE))
   } else {
     return(NA)
   }
@@ -622,10 +630,8 @@ table(CleanData$Catégorie)
 
 CleanData$Catégorie <- factor(CleanData$Catégorie)
 
-CleanDataNoNA <- na.omit(CleanData)
-table(CleanDataNoNA$Catégorie)
-
-CleanDataHighSophie <- subset(CleanData, Sophistication > 0.8)
+CleanDataHighSophie <- subset(CleanData, Sophistication > 0.4)
+CleanDataVHighSophie <- subset(CleanData, Sophistication > 0.65)
 ## Régressions
 
 modeltotal <- lm(Trust ~
@@ -653,29 +659,23 @@ modelSophieEventControls <- lm(Trust ~
 modelSophieUViewControls <- lm(Trust ~
                                  Sophistication +
                                  `UVK`+ `UVB` + `UMK` + `UMB` + Region + age + female + educ + lang + income + LibVote, data = CleanData)
-summary(modelSES)
-summary(modelcatégo)
-summary(modelSophistication)
-summary(modelLibvote)
-summary(modelGAView)
-summary(modelGAUserView)
-summary(modelGADuration)
-summary(modelGAEvent)
-summary(modelSophieViewControls)
-summary(modelSophieUViewControls)
-summary(modelSophieDurationControls)
-summary(modelSophieEventControls)
 
 alias(modelSophieViewControls)
 car::vif(modelSophieViewControls)
-### MODELSUMMARY D'ALEX
-modelsummary::modelsummary(models = list("Category" = modelcatégo,
+### Tableaux no sophistication
+modelsummary::modelsummary(list(
+  "No sophistication scaling" = list("Category" = modelcatégo,
                  "Sophistication" = modelSophistication,
                  "Liberal vote" = modelLibvote, "SES" = modelSES,
                  "Views by user" = modelGAUserView, "Total views" = modelGAView,
                  "Duration" = modelGADuration, "Events" = modelGAEvent
                  ),
-  title = paste("Linear models to predict political trust"),
+  "With sophistication scaling (o.65)" = list("Category" = VHmodelcatégo,
+                                              "Liberal vote" = VHmodelLibvote, "SES" = VHmodelSES,
+                                              "Views by user" = VHmodelGAUserView, "Total views" = VHmodelGAView,
+                                              "Duration" = VHmodelGADuration, "Events" = VHmodelGAEvent)),
+         shape = "rbind",
+  title = paste("Univariate linear models to predict political trust"),
   coef_rename = c("CatégorieÉducation et recherche" = "Education & Research",
                   "CatégorieEnvironnement" = "Environment",
                   "CatégorieFamilles" = "Families",
@@ -684,6 +684,7 @@ modelsummary::modelsummary(models = list("Category" = modelcatégo,
                   "CatégorieLoi et ordre" = "Law & Order",
                   "CatégorieMinorités" = "Minorities",
                   "CatégorieSanté et services sociaux" = "Health and Social Services",
+                  "CatégorieÉconomie et employabilité" = "Economy and Employability",
                   "Sophistication" = "Sophistication Level",
                   "LibVote" = "Voted Liberal",
                   "RegionCoast" = "British Columbia",
@@ -693,6 +694,7 @@ modelsummary::modelsummary(models = list("Category" = modelcatégo,
                   "RegionQuebec" = "Quebec",
                   "RegionPrairies" = "Prairies",
                   "age34m" = "Less than 34 years old ",
+                  "age55p" = "55 years and over",
                   "age35p54" = "35 to 54 years old",
                   "female" = "Gender",
                   "educ" = "Education Level",
@@ -718,22 +720,32 @@ modelsummary::modelsummary(models = list("Category" = modelcatégo,
                     ), output = "markdown"
   )
 
-modelsummary::modelsummary(models = list("All" = modeltotal,
-                                         "Total views" = modelSophieViewControls,
-                                         "Views by user" = modelSophieUViewControls,
-                                         "Duration" = modelSophieDurationControls,
-                                         "Events" = modelSophieEventControls
-),
-title = paste("Linear models to predict political trust"),
+
+
+modelsummary::modelsummary(list(
+  "No sophistication scaling" = list("All" = modeltotal,
+                                     "Total views" = modelSophieViewControls,
+                                     "Views by user" = modelSophieUViewControls,
+                                     "Duration" = modelSophieDurationControls,
+                                     "Events" = modelSophieEventControls),
+  "With sophistication scaling (o.65)" = list("All" = VHmodeltotal,
+                                              "Total views" = VHmodelSophieViewControls,
+                                              "Views by user" = VHmodelSophieUViewControls,
+                                              "Duration" = VHmodelSophieDurationControls,
+                                              "Events" = VHmodelSophieEventControls)),
+  shape = "rbind",
+title = paste("Multivariate linear models to predict political trust"),
 coef_rename = c("Sophistication" = "Sophistication Level",
                 "LibVote" = "Voted Liberal",
-                "RegionCoast" = "Coast",
-                "RegionNorth" = "North",
+                "RegionCoast" = "British Columbia",
+                "RegionAlberta" = "Alberta",
+                "RegionAtlantic" = "Atlantic Canada",
                 "RegionOntario" = "Ontario",
                 "RegionQuebec" = "Quebec",
                 "RegionPrairies" = "Prairies",
                 "age34m" = "Less than 34 years old ",
                 "age35p54" = "35 to 54 years old",
+                "age55p" = "55 years and over",
                 "female" = "Gender",
                 "educ" = "Education Level",
                 "langEnglish" = "Speaks English",
@@ -758,36 +770,35 @@ coef_rename = c("Sophistication" = "Sophistication Level",
 ), output = "markdown")
 
 
-### Modèles pour high sophistications
+### Modèles pour V high sophistications
 
-modeltotal <- lm(Trust ~
-                   `VK`+ `VB` + `MK` + `MB` + `UVK` + `UVB`  +
-                   `UMK` +  `UMB`  + `DK` + `DB`   + `DMK`   +  +`DMB`   +
-                   `EK`  +  `EB`   + `EMK` + `EMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataHighSophie)
-modelcatégo <- lm(Trust ~ Catégorie, data = CleanDataHighSophie)
-modelSES<- lm(Trust ~ Region + age + female + educ + lang + income, data = CleanDataHighSophie)
-modelSophistication <- lm(Trust ~ Sophistication, data = CleanDataHighSophie)
-modelLibvote <- lm(Trust ~ LibVote, data = CleanDataHighSophie)
-modelGAView <- lm(Trust ~ `VK` + `VB` + `MK` + `MB`, data = CleanDataHighSophie)
-modelGAUserView <- lm(Trust ~ `UVK` + `UVB`  + `UMK` +  `UMB`, data = CleanDataHighSophie)
-modelGADuration <- lm(Trust ~ `DK` + `DB` + `DMK` +`DMB`, data = CleanDataHighSophie)
-modelGAEvent <- lm(Trust ~ `EK`  +  `EB`+ `EMK` + `EMB`, data = CleanDataHighSophie)
-modelSophieViewControls <- lm(Trust ~
-                                `VK`+ `VB` + `MK` + `MB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataHighSophie)
-modelSophieDurationControls <- lm(Trust ~
-                                    `DK`+ `DB` + `DMK` + `DMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataHighSophie)
-modelSophieEventControls <- lm(Trust ~
-                                 `EK`+ `EB` + `EMK` + `EMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataHighSophie)
-modelSophieUViewControls <- lm(Trust ~
-                                 `UVK`+ `UVB` + `UMK` + `UMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataHighSophie)
+VHmodeltotal <- lm(Trust ~
+                  `VK`+ `VB` + `MK` + `MB` + `UVK` + `UVB`  +
+                  `UMK` +  `UMB`  + `DK` + `DB`   + `DMK`   +  +`DMB`   +
+                  `EK`  +  `EB`   + `EMK` + `EMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataVHighSophie)
+VHmodelcatégo <- lm(Trust ~ Catégorie, data = CleanDataVHighSophie)
+VHmodelSES<- lm(Trust ~ Region + age + female + educ + lang + income, data = CleanDataVHighSophie)
+VHmodelSophistication <- lm(Trust ~ Sophistication, data = CleanDataVHighSophie)
+VHmodelLibvote <- lm(Trust ~ LibVote, data = CleanDataVHighSophie)
+VHmodelGAView <- lm(Trust ~ `VK` + `VB` + `MK` + `MB`, data = CleanDataVHighSophie)
+VHmodelGAUserView <- lm(Trust ~ `UVK` + `UVB`  + `UMK` +  `UMB`, data = CleanDataVHighSophie)
+VHmodelGADuration <- lm(Trust ~ `DK` + `DB` + `DMK` +`DMB`, data = CleanDataVHighSophie)
+VHmodelGAEvent <- lm(Trust ~ `EK`  +  `EB`+ `EMK` + `EMB`, data = CleanDataVHighSophie)
+VHmodelSophieViewControls <- lm(Trust ~
+                                `VK`+ `VB` + `MK` + `MB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataVHighSophie)
+VHmodelSophieDurationControls <- lm(Trust ~
+                                  `DK`+ `DB` + `DMK` + `DMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataVHighSophie)
+VHmodelSophieEventControls <- lm(Trust ~
+                                `EK`+ `EB` + `EMK` + `EMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataVHighSophie)
+VHmodelSophieUViewControls <- lm(Trust ~
+                                 `UVK`+ `UVB` + `UMK` + `UMB` + Region + age + female + educ + lang + income + LibVote, data = CleanDataVHighSophie)
 
-modelsummary::modelsummary(models = list("Category" = modelcatégo,
-                                         "Sophistication" = modelSophistication,
-                                         "Liberal vote" = modelLibvote, "SES" = modelSES,
-                                         "Views by user" = modelGAUserView, "Total views" = modelGAView,
-                                         "Duration" = modelGADuration, "Events" = modelGAEvent
+modelsummary::modelsummary(models = list("Category" = VHmodelcatégo,
+                                         "Liberal vote" = VHmodelLibvote, "SES" = VHmodelSES,
+                                         "Views by user" = VHmodelGAUserView, "Total views" = VHmodelGAView,
+                                         "Duration" = VHmodelGADuration, "Events" = VHmodelGAEvent
 ),
-title = paste("Linear models to predict political trust"),
+title = paste("Univariate linear models to predict political trust with a political sophistication scaling of 0.65"),
 coef_rename = c("CatégorieÉducation et recherche" = "Education & Research",
                 "CatégorieEnvironnement" = "Environment",
                 "CatégorieFamilles" = "Families",
@@ -796,6 +807,7 @@ coef_rename = c("CatégorieÉducation et recherche" = "Education & Research",
                 "CatégorieLoi et ordre" = "Law & Order",
                 "CatégorieMinorités" = "Minorities",
                 "CatégorieSanté et services sociaux" = "Health and Social Services",
+                "CatégorieÉconomie et employabilité" = "Economy and Employability",
                 "Sophistication" = "Sophistication Level",
                 "LibVote" = "Voted Liberal",
                 "RegionCoast" = "British Columbia",
@@ -806,6 +818,7 @@ coef_rename = c("CatégorieÉducation et recherche" = "Education & Research",
                 "RegionPrairies" = "Prairies",
                 "age34m" = "Less than 34 years old ",
                 "age35p54" = "35 to 54 years old",
+                "age55p" = "55 years and over",
                 "female" = "Gender",
                 "educ" = "Education Level",
                 "langEnglish" = "Speaks English",
@@ -831,13 +844,13 @@ coef_rename = c("CatégorieÉducation et recherche" = "Education & Research",
 )
 
 
-modelsummary::modelsummary(models = list("All" = modeltotal,
-                                         "Total views" = modelSophieViewControls,
-                                         "Views by user" = modelSophieUViewControls,
-                                         "Duration" = modelSophieDurationControls,
-                                         "Events" = modelSophieEventControls
+modelsummary::modelsummary(models = list("All" = VHmodeltotal,
+                                         "Total views" = VHmodelSophieViewControls,
+                                         "Views by user" = VHmodelSophieUViewControls,
+                                         "Duration" = VHmodelSophieDurationControls,
+                                         "Events" = VHmodelSophieEventControls
 ),
-title = paste("Linear models to predict political trust"),
+title = paste("Multivariate linear models to predict political trust with a political sophistication scaling of 0.65"),
 coef_rename = c("Sophistication" = "Sophistication Level",
                 "LibVote" = "Voted Liberal",
                 "RegionCoast" = "British Columbia",

@@ -1,33 +1,73 @@
 ---
-title: "Brouillon Article CPET"
-author: "Benjamin Carignan"
+title: "Using click through rates to assess the relationship between the Polimeter's website and political trust : Trudeau's government case "
+author: 
+ - Benjamin Carignan, Flavie Lachance, Arnaud Beaulé, Hubert Cadieux
+ - Alexandre Fortier Chouinard, Yannick Dufresne
 date: "`r Sys.Date()`"
 output: pdf_document
+header-includes:
+    - \usepackage{setspace}\doublespacing
+    - \usepackage{float}
+abstract : \singlespacing Empirical evidence suggests an increasing cynicism among Canadian citizens,
+  which would be partly rooted in the belief that politicians often break their
+  promises. Whether it is in response to this sentiment, to act as politicians’ 
+  watchdogs or to democratize factual information about politics, experts have 
+  started to create campaign pledge evaluation tools (CPET) in the last decade. 
+  Using Justin Trudeau’s Polimeter as a case study, this paper seeks to determine 
+  the effect of CPETs on Canadian citizens’ perceptions of the Liberal Party of 
+  Canada’s (LPC) ability to fulfill election promises. Using data from the Canadian 
+  Electoral Studies between "2015" and '2021', we evaluate indicators of public 
+  salience and mistrust during election periods based on socio-economic status and
+   specific survey responses. We cross-reference these results with data from 
+  Trudeau’s Polimeter, allowing a comprehensive analysis of how citizens’ 
+  perception of the LPC evolved over time. By aggregating data on verdicts, major 
+  issues and the number of page clicks from the Polimeter website with the 
+  Canadian Electoral Studies, we develop a unique dataset on citizen-government 
+  perception dynamics. Preliminary findings suggest noteworthy correlations 
+  between Polimeter web site traffic data on the pledges related to important 
+  issues of survey respondents. This article contributes to a novel body of work 
+  on the dynamic between CPETs and public trust by exploring if such tools 
+  correlate with a decline in mistrust when it comes to describing how politicians 
+  uphold their electoral promises.
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-# Abstract 
-
-
-
 # Introduction
 
+Having a relative or an acquaintance expressing their distrust against the government or more generally the political system is a common situation for many. Phrases such as : "The whole system is corrupt", "Politics are a rigged game for the elites" or "Politicians never keep their campaign promises", can be heard in many contexts where the public expresses their opinion about issues or simply discuss political events. The latter typical sentence mentioned earlier has been addressed by some scholars and political experts that did the effort to document campaign pledges realization statuses. To do so, many platforms were created to vulgarise and inform the public to what extent governments keep their promises once they've been elected. These platforms are called *Campaign pledge evaluation tools* (CPETs). Starting in 2009 with the *Obameter*, many other CPETs were created in different contexts, but few efforts have been done to study their effects on the public and if they really are fulfilling their mission to convince the public of the real situation of promise keeping by politicians. This lack of knowledge on the contribution of these tools is what Tremblay-Antoine (2020) mentioned in her systematic review of CPETs. No studies have been found to show a causality between the possible influence of CPETs and people's perceptions of the political system and its components. Suggesting that CPETs should be studied in various political and cultural context to find out more about the indicators of the relation between "pledge-to-policy linkages and citizens' political views and behaviors" (Tremblay-Antoine, 2020) has inspired this paper to explore this new phenomenon in a particular context which is : Canada.
 
+Another big inspiration for this paper was three Instagram posts from Radio-Canada which are now deleted, hence unsourcable. Using data from a Canadian CPET, the Polimeter, each of these posts showed some of Trudeau's campaign pledges realization status, being either kept, broken, or partially kept, each post having 10 promises from these three categories. At the moment of observing that Instagram post, it has been noticed that there were 2100 likes for the broken pledges publication, compared to 400 likes for kept and 200 likes for partially kept. This situation seems to highlight the particular attention from the public towards broken plegdes, and raises the question of the negativity bias. This concept was popularised by Rozin and Royzman (2001) and implies that negative entities are stronger than positive entities when exposed to humans (Rozin and Royzman, 2001). Assuming that kept pledges are positive and broken ones are negative, having such disparity between the two of them is potentially a sign of a negativity bias in the canadian population. The fact that partially kept pledges, which are more "negative" than kept ones, are being the most ignored promises puts up at front the possibility that entities in between negative and positive do not brings more attention from the public. Nonetheless, such a situation rose the question of the information contained in web pages events about the attitudes and behaviors of the general public. 
 
-# Click through rates pour prédire des comportements/attitudes
+At CPETs being mostly found on the internet, it is important to explore the new types of data that offers us these new platforms. 
 
+# Decoding User Engagement
 
-# Click destination/reading choices led by emotions
+In the dynamic world of digital marketing and understanding user behavior, the focal point often rests on Click-through Rates (CTRs), serving as a key indicator of user engagement (Danaher, 2007). In fact, click-through logs are invaluable and can benefit a wide range of search-related applications, such as user satisfaction estimation (Zhu et al., 2011). As we delve into the intricacies of this metric, several trends and considerations emerge, shaping the landscape for the scientists. The art of anticipating CTR trends has evolved with the integration of machine learning algorithms and AI-driven analytics. These tools serve as navigational aids, helping marketers and scientists predict user behavior. An understanding of the global dynamics is essential for accurate CTR predictions. Cultural shifts, regional preferences, and societal trends significantly impact user engagement in diverse markets (Danaher, 2007).
+ 
+Another way of examining the prediction of clicks comes from the study of Randolph E. Bucklin and Catarina Sismeiro (2003). In their study, the authors use a type II tobit model to assess and measure the rates of clicks (Bucklin, Sismeiro, 2003). Indeed, they develop a modeling approach to understand some of the basics around the site-browsing behavior at the individual level (Bucklin, Sismeiro, 2003). The scientists used two variables to determine and evaluate the behaviors of the people. The first one resides in the manifest by page request (Bucklin, Sismeiro, 2003). In other words, going to another link on the page you were shows the intent from the individual to stay on the site. The same goes for going back, etc. Users determine the rate of page views themselves with how often they click on links during a session (Danaher, 2007). The second dependent variable is the time someone stays on the same page (Bucklin, Sismeiro, 2003). According to Google Support, the duration on the platform Google Analytics is measured using the total duration of all engaged sessions (in seconds) divided by the number of sessions (Google Analytics, 2023).  Using these two variables, the authors found that users reduce their expected number of page views when they come back to the same site. This leads us to one of our hypothesis :\newline 
+ 
+*H1) We expect to find stronger coefficients in Google Analytics when using views from a user or the average duration by session compared to other types of data from Google Analytics.* 
 
+# Public perception, media malaise and negativity bias
+ 
+Media effect and information seeking affects the users drastically (Ceron, 2015). In the article by Andrea Ceron (2015), it is shown that the media malaise theory has an extensive effect on political trust. It can even generate cynicism throughout the population, hence decreasing trust in the political institutions (Ceron, 2015). The media malaise theory states that the content that is presented on the platforms does not give a fair coverage, so the bad is presented first to give attraction to a media outlet or link, thus creating an ambiance of mistrust in this sphere (Robinson, 1976). When it comes to decision making, political trust is an important aspect. Another study shows that traditionally, a government can be closely associated to a “thin” and not “thick” trust (Zhu et al., 2011, p.10). This is also affecting the population’s cynicism. On the other end, a positive algorithm has shown that it can increase confidence in the institutions and create a virtuous circle (Norris, 2000, p.309).
 
-# Confiance politique en tant qu'émotion
+The respect for electoral promises is central to the concept of representative democracy. It is the responsibility of the ruling party to address the wishes of the population by implementing the policies outlined in their electoral program (Downs, 1957). The way governments fulfill their promises influences voters' evaluation of the government and their electoral choices. In fact, voters tend to penalize political parties that have not kept their commitments and re-elect those who have fulfilled their electoral promises (Born, van Eck, and Johannesson, 2018).
+ 
+Most governments in Western democracies generally manage to fulfill the majority of their promises (Naurin, 2011). In Canada, most commitments made by the ruling parties during electoral campaigns are realized, either entirely or partially (Costello, O’Neill, and Thomson, 2016). However, a minority of the population believes that political parties keep their promises. Moreover, many voters make an erroneous assessment of the realization of electoral promises (Duval and Pétry, 2020). There is, therefore, a disparity between the rate of broken promises and citizens' perception. This disparity could be partly explained by the fact that voters primarily gather information through the media (Weaver, 1996). However, the media only present a filtered sample of information (Lippmann, 1922). How the media choose and present this information can influence citizens' evaluation of the government's performance (Kleinnijenhuis and Van Hoof, 2009).
+ 
+According to Müller (2020), there is a lower level of media coverage for fulfilled promises compared to broken promises. Moreover, increased media attention on broken promises seems to have risen in recent years. This negative bias is particularly pronounced regarding promises related to the economy. Since the media exert considerable influence on voters' perception of politics, constant attention to unfulfilled promises could contribute to citizens perceiving politicians as untrustworthy (Müller, 2020).
+ 
+In addition to the higher media coverage for broken promises, citizens tend to adopt selective exposure, meaning they search for information that confirms their preconceived ideas and avoid those that contradict their opinions (Porumbescu, 2018). Consequently, citizens who already have a negative view of the ruling party will be more inclined to select negative media information and, by extension, be more interested in broken promises. The importance given to unfulfilled promises in the media could exert a negative influence on citizens' trust in politicians. In fact, trust in politicians significantly decreases among those who believe politicians do not keep their promises and that they only make such promises to gain votes, without genuinely intending to implement them once in power (Rose and Wessels, 2019). This influence is particularly important considering that broken promises have more weight than fulfilled promises in voters' evaluation of the government (Naurin et al., 2019).
+ 
+In addition to being an essential source of information, the media are used as heuristic shortcuts. Obtaining information about the level of realization of electoral promises requires a certain level of political sophistication, time, and knowledge. That's why many people use the medias as decision-making shortcuts, i.e., information used to form a quick opinion on a subject without having to conduct in-depth research (Lupia, 1994). However, the use of heuristic shortcuts often distorts citizens' evaluation of political parties' commitment fulfillment (Pétry and Duval, 2017).
+ 
+However, the influence of negative biases present in the media does not have the same effect on all citizens. Indeed, political sophistication plays a mediating role. Individuals with greater political sophistication appear less influenced by negative media biases (Chang, 2018; Desmet et al., 2015). The political sophistication includes interest, involvement, and political knowledge (Converse, 1964). According to Zaller (1992), individuals who are highly attentive and interested in politics are more likely to gather information through the media and, consequently, be exposed to media messages. However, they are less influenced by these messages because their interest in politics provides them with knowledge that allows them to filter information. The most politically sophisticated voters generally gather information from a greater quantity and better quality of sources and are generally able to assess the realization of electoral promises more accurately (Thomson and Brandenburg, 2019). 
 
-
-# Attention vers nouvelles/information negative/promesse rompue= manque de confiance/emotions négatives
+Thus, voters with a higher level of political knowledge and interest should be more inclined to use information seeking media such as the Polimeter. The Polimeter is a campaign pledge evaluation tool (CPET) that tracks the electoral promises of ruling parties (Tremblay-Antoine et al., 2020; Trudeau Polimeter, 2015).
 
 
 # Grouping par catégories (confiance politique par catégorie)
@@ -35,14 +75,393 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Data sets
 
+![](_graphs/TrustScale.png)
+![](_graphs/SophieScale1.png)
+
+![](_graphs/SophieScale2.png)
+
+
 
 # Methodology
 
 
 # analyse
 
-
 # discussion
 
 
 # Conclusion
+
+# Bibliography 
+
+Born, A., van Eck, P., & Johannesson, M. (2018). "An experimental investigation of election promises." Political Psychology, 39(3), 685–705.
+
+Bucklin, R. E., & Sismeiro, C. (2003). "A model of web site browsing behavior estimated on clickstream data." Journal of Marketing Research, 40(3), 249-267.
+
+Ceron, A. (2015). "Internet, news, and political trust: The difference between social media and online media outlets." Journal of Computer-Mediated Communication, 20(5), 487-503.
+
+Chang, W. C. (2018). "Media use and satisfaction with democracy: Testing the role of political interest." Social Indicators Research, 140, 999-1016.
+
+Converse, Philip E. (1964). "The nature of belief systems in mass publics." In Ideology and Discontent, ed. David Apter. New York: Free Press.
+
+Costello, R., O’Neill, P., & Thomson, R. (2016). "The fulfilment of election pledges by the outgoing government." In How Ireland Voted 2016: The Election That Nobody Won, 27-45.
+
+Desmet, P., van Spanje, J., & de Vreese, C. (2015). "Discussing the Democratic Deficit: Effects of Media and Interpersonal Communication on Satisfaction with Democracy in the European Union." International Journal of Communication (19328036), 9.
+
+Danaher, P. J. (2007). "Modeling page views across multiple websites with an application to internet reach and frequency prediction." Marketing Science, 26(3), 422-437.
+
+Downs, A. (1957). "An Economic Theory of Political Action in a Democracy." Journal of Political Economy, 65(2), 135–150.
+
+Duval, D., & Pétry, F. (2020). "Citizens’ evaluations of campaign pledge fulfillment in Canada." Party Politics, 26(4), 437–447.
+
+Google. (2023). "Google Analytics metrics columns in the new Search Ads 360." Google Support. Link
+
+Kleinnijenhuis, J., & van Hoof, A. M. (2009). "Media coverage of government policies and citizen satisfaction with information provision and policy results." In Politik in der Mediendemokratie, 320-34.
+
+Lippmann, W. (1922). Public Opinion. New York: Harcourt-Brace.
+
+Lupia, A. (1994). "Shortcuts versus encyclopedias: Information and voting behavior in California insurance reform elections." American Political Science Review, 88(1), 63-76.
+
+Müller, S. (2020). "Media coverage of campaign promises throughout the electoral cycle." Political Communication, 37(5), 696-718.
+
+Naurin, E. (2011). "Election promises, party behaviour and voter perceptions." Springer.
+
+Naurin, E., Soroka, S., & Markwat, N. (2019). "Asymmetric Accountability: An Experimental Investigation of Biases in Evaluations of Governments’ Election Pledges." Comparative Political Studies, 52(13-14), 2207-2234.
+
+Norris, P. (2000). A Virtuous Circle? Political Communications in Post-Industrial Democracies. Cambridge: Cambridge University Press.
+
+Pétry, F., & Duval, D. (2017). "When heuristics go bad: Citizens' misevaluations of campaign pledge fulfilment." Electoral Studies, 50, 116-127.
+
+Polimetre Trudeau. (2015). Retrieved from Link
+
+Porumbescu, G. A. (2018). "Assessing the implications of online mass media for citizens’ evaluations of government." Policy Design and Practice, 1(3), 233-240.
+
+Robinson, M. J. (1976). "Public affairs television and the growth of political malaise: The case of 'The Selling of the Pentagon'." American Political Science Review, 70(2), 409-432.
+
+Rose, R., & Wessels, B. (2019). "Money, sex and broken promises: Politicians’ bad behaviour reduces trust." Parliamentary Affairs, 72(3), 481-500.
+
+Thomson, R., & Brandenburg, H. (2019). "Trust and citizens’ evaluations of promise keeping by governing parties." Political Studies, 67(1), 249-266.
+
+Zhu, Z. A., Chen, W., Minka, T., Zhu, C., & Chen, Z. (2010, February). "A novel click model and its applications to online advertising." In Proceedings of the Third ACM International Conference on Web Search and Data Mining, 321-330.
+
+### TO ADD TO THE BIBLIOGRAPHY
+(Rozin and Royzman, 2001)
+# Appendix
+
+Table: Univariate linear models to predict political trust
+
+|                            | Category | Sophistication | Liberal vote |    SES   | Views by user | Total views | Duration |  Events  | 
+|:---------------------------|---------:|---------------:|-------------:|---------:|--------------:|------------:|---------:|---------:|
+| (Intercept)                |   0.351  |      0.248     |     0.376    |   0.267  |     0.100     |    0.453    |   0.177  |   0.448  | 
+|                            |  (0.003) |     (0.005)    |    (0.002)   |  (0.014) |    (0.032)    |   (0.016)   |  (0.040) |  (0.010) | 
+| Education & Research       |   0.043  |                |              |          |               |             |          |          | 
+|                            |  (0.019) |                |              |          |               |             |          |          | 
+| Environment                |   0.078  |                |              |          |               |             |          |          | 
+|                            |  (0.005) |                |              |          |               |             |          |          | 
+| Families                   |   0.065  |                |              |          |               |             |          |          | 
+|                            |  (0.014) |                |              |          |               |             |          |          | 
+| Governments & Democracy    |  -0.046  |                |              |          |               |             |          |          | 
+|                            |  (0.012) |                |              |          |               |             |          |          | 
+| Identity & Nationalism     |   0.012  |                |              |          |               |             |          |          | 
+|                            |  (0.042) |                |              |          |               |             |          |          | 
+| Law & Order                |  -0.067  |                |              |          |               |             |          |          | 
+|                            |  (0.015) |                |              |          |               |             |          |          | 
+| Minorities                 |  -0.006  |                |              |          |               |             |          |          | 
+|                            |  (0.014) |                |              |          |               |             |          |          | 
+| Health and Social Services |   0.062  |                |              |          |               |             |          |          | 
+|                            |  (0.005) |                |              |          |               |             |          |          | 
+| Sophistication Level       |          |      0.291     |              |          |               |             |          |          | 
+|                            |          |     (0.010)    |              |          |               |             |          |          | 
+| Voted Liberal              |          |                |     0.183    |          |               |             |          |          | 
+|                            |          |                |    (0.004)   |          |               |             |          |          | 
+| Atlantic Canada            |          |                |              |   0.090  |               |             |          |          | 
+|                            |          |                |              |  (0.011) |               |             |          |          | 
+| British Columbia           |          |                |              |   0.055  |               |             |          |          | 
+|                            |          |                |              |  (0.009) |               |             |          |          | 
+| Ontario                    |          |                |              |   0.057  |               |             |          |          | 
+|                            |          |                |              |  (0.007) |               |             |          |          | 
+| Prairies                   |          |                |              |   0.040  |               |             |          |          | 
+|                            |          |                |              |  (0.011) |               |             |          |          | 
+| Quebec                     |          |                |              |   0.085  |               |             |          |          | 
+|                            |          |                |              |  (0.011) |               |             |          |          | 
+| 35 to 54 years old         |          |                |              |   0.035  |               |             |          |          | 
+|                            |          |                |              |  (0.005) |               |             |          |          | 
+| 55 years and over          |          |                |              |   0.069  |               |             |          |          | 
+|                            |          |                |              |  (0.007) |               |             |          |          | 
+| Gender                     |          |                |              |   0.005  |               |             |          |          | 
+|                            |          |                |              |  (0.004) |               |             |          |          | 
+| Education Level            |          |                |              |   0.102  |               |             |          |          | 
+|                            |          |                |              |  (0.009) |               |             |          |          | 
+| Speaks English             |          |                |              |  -0.017  |               |             |          |          | 
+|                            |          |                |              |  (0.010) |               |             |          |          | 
+| Speaks French              |          |                |              |  -0.002  |               |             |          |          | 
+|                            |          |                |              |  (0.013) |               |             |          |          | 
+| Income Level               |          |                |              |   0.043  |               |             |          |          | 
+|                            |          |                |              |  (0.007) |               |             |          |          | 
+| Kept view by user          |          |                |              |          |     -0.001    |             |          |          | 
+|                            |          |                |              |          |    (0.000)    |             |          |          | 
+| Broken view by user        |          |                |              |          |     0.000     |             |          |          | 
+|                            |          |                |              |          |    (0.000)    |             |          |          | 
+| Kept mean by user          |          |                |              |          |     0.262     |             |          |          | 
+|                            |          |                |              |          |    (0.026)    |             |          |          | 
+| Broken mean by user        |          |                |              |          |     -0.026    |             |          |          | 
+|                            |          |                |              |          |    (0.026)    |             |          |          | 
+| Kept views                 |          |                |              |          |               |    0.000    |          |          | 
+|                            |          |                |              |          |               |   (0.000)   |          |          | 
+| Broken views               |          |                |              |          |               |    0.000    |          |          | 
+|                            |          |                |              |          |               |   (0.000)   |          |          | 
+| Kept mean                  |          |                |              |          |               |    -0.027   |          |          | 
+|                            |          |                |              |          |               |   (0.005)   |          |          | 
+| Broken mean                |          |                |              |          |               |    0.009    |          |          | 
+|                            |          |                |              |          |               |   (0.004)   |          |          | 
+| Kept duration              |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.000) |          | 
+| Broken duration            |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.000) |          | 
+| Kept mean duration         |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.000) |          | 
+| Broken mean duration       |          |                |              |          |               |             |   0.007  |          | 
+|                            |          |                |              |          |               |             |  (0.001) |          | 
+| Kept events                |          |                |              |          |               |             |          |   0.000  | 
+|                            |          |                |              |          |               |             |          |  (0.000) | 
+| Broken events              |          |                |              |          |               |             |          |   0.000  | 
+|                            |          |                |              |          |               |             |          |  (0.000) | 
+| Kept mean events           |          |                |              |          |               |             |          |  -0.009  | 
+|                            |          |                |              |          |               |             |          |  (0.002) | 
+| Broken mean events         |          |                |              |          |               |             |          |  -0.002  | 
+|                            |          |                |              |          |               |             |          |  (0.002) | 
+| Num.Obs.                   |   10095  |      10094     |     7546     |   6719   |     10095     |    10095    |   10095  |   10095  | 
+| R2                         |   0.038  |      0.079     |     0.232    |   0.066  |     0.029     |    0.011    |   0.014  |   0.019  | 
+| R2 Adj.                    |   0.037  |      0.079     |     0.232    |   0.065  |     0.029     |    0.011    |   0.014  |   0.019  | 
+| AIC                        |  -4211.4 |     -4671.2    |    -6300.1   |  -3961.9 |    -4127.9    |   -3944.2   |  -3978.3 |  -4026.0 | 
+| BIC                        |  -4139.2 |     -4649.5    |    -6279.3   |  -3866.6 |    -4084.6    |   -3900.9   |  -3934.9 |  -3982.7 | 
+| Log.Lik.                   | 2115.714 |    2338.593    |   3153.029   | 1994.973 |    2069.941   |   1978.124  | 1995.131 | 2019.025 | 
+| RMSE                       |   0.20   |      0.19      |     0.16     |   0.18   |      0.20     |     0.20    |   0.20   |   0.20   | 
+|:---------------------------|---------:|---------------:|-------------:|---------:|--------------:|------------:|---------:|---------:|
+| (Intercept)                |   0.391  |                |     0.384    |   0.227  |     -0.005    |    0.583    |   0.207  |   0.571  | 
+|                            |  (0.007) |                |    (0.005)   |  (0.033) |    (0.072)    |   (0.035)   |  (0.093) |  (0.022) | 
+| Education & Research       |   0.144  |                |              |          |               |             |          |          | 
+|                            |  (0.069) |                |              |          |               |             |          |          | 
+| Environment                |   0.139  |                |              |          |               |             |          |          | 
+|                            |  (0.011) |                |              |          |               |             |          |          | 
+| Families                   |   0.173  |                |              |          |               |             |          |          | 
+|                            |  (0.039) |                |              |          |               |             |          |          | 
+| Governments & Democracy    |  -0.053  |                |              |          |               |             |          |          | 
+|                            |  (0.022) |                |              |          |               |             |          |          | 
+| Identity & Nationalism     |   0.121  |                |              |          |               |             |          |          | 
+|                            |  (0.087) |                |              |          |               |             |          |          | 
+| Law & Order                |  -0.093  |                |              |          |               |             |          |          | 
+|                            |  (0.031) |                |              |          |               |             |          |          | 
+| Minorities                 |   0.032  |                |              |          |               |             |          |          | 
+|                            |  (0.035) |                |              |          |               |             |          |          | 
+| Health and Social Services |   0.107  |                |              |          |               |             |          |          | 
+|                            |  (0.011) |                |              |          |               |             |          |          | 
+| Voted Liberal              |          |                |     0.238    |          |               |             |          |          | 
+|                            |          |                |    (0.008)   |          |               |             |          |          | 
+| Atlantic Canada            |          |                |              |   0.152  |               |             |          |          | 
+|                            |          |                |              |  (0.026) |               |             |          |          | 
+| British Columbia           |          |                |              |   0.076  |               |             |          |          | 
+|                            |          |                |              |  (0.020) |               |             |          |          | 
+| Ontario                    |          |                |              |   0.079  |               |             |          |          | 
+|                            |          |                |              |  (0.015) |               |             |          |          | 
+| Prairies                   |          |                |              |   0.082  |               |             |          |          | 
+|                            |          |                |              |  (0.024) |               |             |          |          | 
+| Quebec                     |          |                |              |   0.113  |               |             |          |          | 
+|                            |          |                |              |  (0.022) |               |             |          |          | 
+| 35 to 54 years old         |          |                |              |   0.028  |               |             |          |          | 
+|                            |          |                |              |  (0.013) |               |             |          |          | 
+| 55 years and over          |          |                |              |   0.065  |               |             |          |          | 
+|                            |          |                |              |  (0.015) |               |             |          |          | 
+| Gender                     |          |                |              |   0.034  |               |             |          |          | 
+|                            |          |                |              |  (0.010) |               |             |          |          | 
+| Education Level            |          |                |              |   0.133  |               |             |          |          | 
+|                            |          |                |              |  (0.019) |               |             |          |          | 
+| Speaks English             |          |                |              |  -0.018  |               |             |          |          | 
+|                            |          |                |              |  (0.025) |               |             |          |          | 
+| Speaks French              |          |                |              |  -0.002  |               |             |          |          | 
+|                            |          |                |              |  (0.028) |               |             |          |          | 
+| Income Level               |          |                |              |   0.047  |               |             |          |          | 
+|                            |          |                |              |  (0.014) |               |             |          |          | 
+| Kept view by user          |          |                |              |          |     -0.001    |             |          |          | 
+|                            |          |                |              |          |    (0.001)    |             |          |          | 
+| Broken view by user        |          |                |              |          |     0.000     |             |          |          | 
+|                            |          |                |              |          |    (0.000)    |             |          |          | 
+| Kept mean by user          |          |                |              |          |     0.413     |             |          |          | 
+|                            |          |                |              |          |    (0.057)    |             |          |          | 
+| Broken mean by user        |          |                |              |          |     -0.033    |             |          |          | 
+|                            |          |                |              |          |    (0.062)    |             |          |          | 
+| Kept views                 |          |                |              |          |               |    0.000    |          |          | 
+|                            |          |                |              |          |               |   (0.000)   |          |          | 
+| Broken views               |          |                |              |          |               |    0.000    |          |          | 
+|                            |          |                |              |          |               |   (0.000)   |          |          | 
+| Kept mean                  |          |                |              |          |               |    -0.045   |          |          | 
+|                            |          |                |              |          |               |   (0.012)   |          |          | 
+| Broken mean                |          |                |              |          |               |    0.016    |          |          | 
+|                            |          |                |              |          |               |   (0.011)   |          |          | 
+| Kept duration              |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.000) |          | 
+| Broken duration            |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.000) |          | 
+| Kept mean duration         |          |                |              |          |               |             |   0.000  |          | 
+|                            |          |                |              |          |               |             |  (0.001) |          | 
+| Broken mean duration       |          |                |              |          |               |             |   0.010  |          | 
+|                            |          |                |              |          |               |             |  (0.002) |          | 
+| Kept events                |          |                |              |          |               |             |          |   0.000  | 
+|                            |          |                |              |          |               |             |          |  (0.000) | 
+| Broken events              |          |                |              |          |               |             |          |   0.000  | 
+|                            |          |                |              |          |               |             |          |  (0.000) | 
+| Kept mean events           |          |                |              |          |               |             |          |  -0.015  | 
+|                            |          |                |              |          |               |             |          |  (0.005) | 
+| Broken mean events         |          |                |              |          |               |             |          |  -0.002  | 
+|                            |          |                |              |          |               |             |          |  (0.005) | 
+| Num.Obs.                   |   1941   |                |     1813     |   1655   |      1941     |     1941    |   1941   |   1941   | 
+| R2                         |   0.114  |                |     0.331    |   0.094  |     0.085     |    0.029    |   0.042  |   0.052  | 
+| R2 Adj.                    |   0.111  |                |     0.330    |   0.087  |     0.083     |    0.027    |   0.040  |   0.050  | 
+| AIC                        |  -832.1  |                |    -1427.4   |  -750.7  |     -777.3    |    -662.0   |  -688.5  |  -708.0  | 
+| BIC                        |  -776.4  |                |    -1410.9   |  -674.9  |     -743.9    |    -628.5   |  -655.1  |  -674.6  | 
+| Log.Lik.                   |  426.047 |                |    716.701   |  389.336 |    394.668    |   336.980   |  350.266 |  360.013 | 
+| RMSE                       |   0.19   |                |     0.16     |   0.19   |      0.20     |     0.20    |   0.20   |   0.20   | 
+|:---------------------------|---------:|---------------:|-------------:|---------:|--------------:|------------:|---------:|---------:|
+
+Table: Multivariate linear models to predict political trust
+
+|                      |    All   | Total views | Views by user | Duration |  Events  | 
+|:---------------------|---------:|------------:|--------------:|---------:|---------:|
+| (Intercept)          |  -0.054  |    0.276    |     0.050     |   0.075  |   0.274  | 
+|                      |  (0.189) |   (0.023)   |    (0.034)    |  (0.044) |  (0.018) | 
+| Sophistication Level |   0.131  |    0.127    |     0.125     |   0.132  |   0.126  | 
+|                      |  (0.012) |   (0.012)   |    (0.012)    |  (0.012) |  (0.012) | 
+| Kept views           |   0.002  |    0.000    |               |          |          | 
+|                      |  (0.001) |   (0.000)   |               |          |          | 
+| Broken views         |  -0.001  |    0.000    |               |          |          | 
+|                      |  (0.002) |   (0.000)   |               |          |          | 
+| Kept mean            |  -0.002  |    -0.015   |               |          |          | 
+|                      |  (0.020) |   (0.005)   |               |          |          | 
+| Broken mean          |   0.101  |    0.005    |               |          |          | 
+|                      |  (0.090) |   (0.005)   |               |          |          | 
+| Kept views by user   |  -0.008  |             |     -0.001    |          |          | 
+|                      |  (0.002) |             |    (0.000)    |          |          | 
+| Broken views by user |   0.002  |             |     0.000     |          |          | 
+|                      |  (0.007) |             |    (0.000)    |          |          | 
+| Kept mean by user    |   0.763  |             |     0.237     |          |          | 
+|                      |  (0.112) |             |    (0.028)    |          |          | 
+| Broken mean by user  |  -0.697  |             |     -0.075    |          |          | 
+|                      |  (0.211) |             |    (0.028)    |          |          | 
+| Atlantic Canada      |   0.044  |    0.050    |     0.045     |   0.048  |   0.048  | 
+|                      |  (0.010) |   (0.010)   |    (0.010)    |  (0.010) |  (0.010) | 
+| British Columbia     |   0.038  |    0.043    |     0.038     |   0.043  |   0.041  | 
+|                      |  (0.008) |   (0.008)   |    (0.008)    |  (0.008) |  (0.008) | 
+| Ontario              |   0.021  |    0.023    |     0.021     |   0.022  |   0.023  | 
+|                      |  (0.007) |   (0.007)   |    (0.007)    |  (0.007) |  (0.007) | 
+| Prairies             |   0.027  |    0.030    |     0.027     |   0.029  |   0.029  | 
+|                      |  (0.010) |   (0.010)   |    (0.010)    |  (0.010) |  (0.010) | 
+| Quebec               |   0.056  |    0.060    |     0.056     |   0.061  |   0.059  | 
+|                      |  (0.010) |   (0.010)   |    (0.010)    |  (0.010) |  (0.010) | 
+| 35 to 54 years old   |   0.015  |    0.015    |     0.014     |   0.015  |   0.014  | 
+|                      |  (0.005) |   (0.005)   |    (0.005)    |  (0.005) |  (0.005) | 
+| 55 years and over    |   0.032  |    0.033    |     0.032     |   0.032  |   0.032  | 
+|                      |  (0.006) |   (0.006)   |    (0.006)    |  (0.006) |  (0.006) | 
+| Gender               |  -0.001  |    0.003    |     0.000     |   0.001  |   0.002  | 
+|                      |  (0.004) |   (0.004)   |    (0.004)    |  (0.004) |  (0.004) | 
+| Education Level      |   0.055  |    0.058    |     0.055     |   0.060  |   0.056  | 
+|                      |  (0.008) |   (0.008)   |    (0.008)    |  (0.008) |  (0.008) | 
+| Speaks English       |  -0.010  |    -0.004   |     -0.008    |  -0.005  |  -0.006  | 
+|                      |  (0.009) |   (0.009)   |    (0.009)    |  (0.009) |  (0.009) | 
+| Speaks French        |   0.012  |    0.024    |     0.016     |   0.024  |   0.020  | 
+|                      |  (0.012) |   (0.012)   |    (0.012)    |  (0.012) |  (0.012) | 
+| Income Level         |   0.024  |    0.024    |     0.024     |   0.025  |   0.024  | 
+|                      |  (0.006) |   (0.006)   |    (0.006)    |  (0.006) |  (0.006) | 
+| Voted Liberal        |   0.180  |    0.188    |     0.182     |   0.186  |   0.185  | 
+|                      |  (0.004) |   (0.004)   |    (0.004)    |  (0.004) |  (0.004) | 
+| Kept duration        |          |             |               |   0.000  |          | 
+|                      |          |             |               |  (0.000) |          | 
+| Broken duration      |          |             |               |   0.000  |          | 
+|                      |          |             |               |  (0.000) |          | 
+| Kept mean duration   |          |             |               |   0.001  |          | 
+|                      |          |             |               |  (0.000) |          | 
+| Broken mean duration |          |             |               |   0.005  |          | 
+|                      |          |             |               |  (0.001) |          | 
+| Kept events          |          |             |               |          |   0.000  | 
+|                      |          |             |               |          |  (0.000) | 
+| Broken events        |          |             |               |          |   0.000  | 
+|                      |          |             |               |          |  (0.000) | 
+| Kept mean events     |          |             |               |          |  -0.005  | 
+|                      |          |             |               |          |  (0.002) | 
+| Broken mean events   |          |             |               |          |  -0.002  | 
+|                      |          |             |               |          |  (0.002) | 
+| Num.Obs.             |   6085   |     6085    |      6085     |   6085   |   6085   | 
+| R2                   |   0.339  |    0.320    |     0.332     |   0.321  |   0.325  | 
+| R2 Adj.              |   0.337  |    0.318    |     0.330     |   0.319  |   0.323  | 
+| AIC                  |  -5681.0 |   -5516.5   |    -5626.0    |  -5524.0 |  -5559.4 | 
+| BIC                  |  -5519.8 |   -5382.2   |    -5491.8    |  -5389.7 |  -5425.1 | 
+| Log.Lik.             | 2864.484 |   2778.240  |    2833.015   | 2781.992 | 2799.692 | 
+| RMSE                 |   0.15   |     0.15    |      0.15     |   0.15   |   0.15   | 
+|:---------------------|---------:|------------:|--------------:|---------:|---------:|
+| (Intercept)          |   0.041  |    0.265    |     0.059     |   0.176  |   0.277  | 
+|                      |  (0.383) |   (0.044)   |    (0.068)    |  (0.085) |  (0.035) | 
+| Kept views           |   0.001  |    0.000    |               |          |          | 
+|                      |  (0.002) |   (0.000)   |               |          |          | 
+| Broken views         |   0.001  |    0.000    |               |          |          | 
+|                      |  (0.004) |   (0.000)   |               |          |          | 
+| Kept mean            |   0.022  |    -0.015   |               |          |          | 
+|                      |  (0.044) |   (0.010)   |               |          |          | 
+| Broken mean          |   0.014  |    0.011    |               |          |          | 
+|                      |  (0.187) |   (0.009)   |               |          |          | 
+| Kept views by user   |  -0.005  |             |     0.000     |          |          | 
+|                      |  (0.004) |             |    (0.001)    |          |          | 
+| Broken views by user |  -0.005  |             |     0.000     |          |          | 
+|                      |  (0.014) |             |    (0.000)    |          |          | 
+| Kept mean by user    |   0.578  |             |     0.189     |          |          | 
+|                      |  (0.255) |             |    (0.051)    |          |          | 
+| Broken mean by user  |  -0.424  |             |     -0.055    |          |          | 
+|                      |  (0.442) |             |    (0.055)    |          |          | 
+| Atlantic Canada      |   0.061  |    0.062    |     0.059     |   0.061  |   0.060  | 
+|                      |  (0.021) |   (0.021)   |    (0.021)    |  (0.021) |  (0.021) | 
+| British Columbia     |   0.057  |    0.060    |     0.057     |   0.062  |   0.057  | 
+|                      |  (0.016) |   (0.017)   |    (0.017)    |  (0.017) |  (0.017) | 
+| Ontario              |   0.029  |    0.030    |     0.029     |   0.031  |   0.029  | 
+|                      |  (0.012) |   (0.013)   |    (0.013)    |  (0.013) |  (0.013) | 
+| Prairies             |   0.045  |    0.050    |     0.046     |   0.051  |   0.048  | 
+|                      |  (0.019) |   (0.019)   |    (0.019)    |  (0.019) |  (0.019) | 
+| Quebec               |   0.092  |    0.095    |     0.090     |   0.097  |   0.092  | 
+|                      |  (0.018) |   (0.018)   |    (0.018)    |  (0.018) |  (0.018) | 
+| 35 to 54 years old   |   0.025  |    0.023    |     0.023     |   0.025  |   0.022  | 
+|                      |  (0.010) |   (0.010)   |    (0.010)    |  (0.010) |  (0.010) | 
+| 55 years and over    |   0.047  |    0.049    |     0.047     |   0.049  |   0.047  | 
+|                      |  (0.012) |   (0.012)   |    (0.012)    |  (0.012) |  (0.012) | 
+| Gender               |   0.007  |    0.011    |     0.009     |   0.010  |   0.011  | 
+|                      |  (0.008) |   (0.008)   |    (0.008)    |  (0.008) |  (0.008) | 
+| Education Level      |   0.090  |    0.094    |     0.088     |   0.097  |   0.091  | 
+|                      |  (0.015) |   (0.016)   |    (0.015)    |  (0.015) |  (0.016) | 
+| Speaks English       |  -0.009  |    -0.005   |     -0.008    |  -0.005  |  -0.008  | 
+|                      |  (0.020) |   (0.020)   |    (0.020)    |  (0.020) |  (0.020) | 
+| Speaks French        |  -0.001  |    0.013    |     0.005     |   0.013  |   0.009  | 
+|                      |  (0.023) |   (0.023)   |    (0.023)    |  (0.023) |  (0.023) | 
+| Income Level         |   0.032  |    0.031    |     0.033     |   0.033  |   0.032  | 
+|                      |  (0.012) |   (0.012)   |    (0.012)    |  (0.012) |  (0.012) | 
+| Voted Liberal        |   0.217  |    0.233    |     0.223     |   0.229  |   0.229  | 
+|                      |  (0.009) |   (0.008)   |    (0.008)    |  (0.008) |  (0.008) | 
+| Kept duration        |          |             |               |   0.000  |          | 
+|                      |          |             |               |  (0.000) |          | 
+| Broken duration      |          |             |               |   0.000  |          | 
+|                      |          |             |               |  (0.000) |          | 
+| Kept mean duration   |          |             |               |   0.000  |          | 
+|                      |          |             |               |  (0.001) |          | 
+| Broken mean duration |          |             |               |   0.003  |          | 
+|                      |          |             |               |  (0.002) |          | 
+| Kept events          |          |             |               |          |   0.000  | 
+|                      |          |             |               |          |  (0.000) | 
+| Broken events        |          |             |               |          |   0.000  | 
+|                      |          |             |               |          |  (0.000) | 
+| Kept mean events     |          |             |               |          |  -0.005  | 
+|                      |          |             |               |          |  (0.004) | 
+| Broken mean events   |          |             |               |          |   0.001  | 
+|                      |          |             |               |          |  (0.005) | 
+| Num.Obs.             |   1613   |     1613    |      1613     |   1613   |   1613   | 
+| R2                   |   0.428  |    0.405    |     0.418     |   0.408  |   0.410  | 
+| R2 Adj.              |   0.421  |    0.399    |     0.412     |   0.402  |   0.404  | 
+| AIC                  |  -1463.2 |   -1408.2   |    -1443.5    |  -1415.5 |  -1421.8 | 
+| BIC                  |  -1339.3 |   -1305.8   |    -1341.1    |  -1313.2 |  -1319.4 | 
+| Log.Lik.             |  754.583 |   723.090   |    740.730    |  726.758 |  729.882 | 
+| RMSE                 |   0.15   |     0.15    |      0.15     |   0.15   |   0.15   | 
+|:---------------------|---------:|------------:|--------------:|---------:|---------:|
