@@ -1,5 +1,5 @@
 ---
-title: "Using click through rates to assess the relationship between the Polimeter's website and political trust : Trudeau's government case "
+title: "Using click through rates to assess political trust: The Trudeau Polimeter case "
 author: 
  - Benjamin Carignan, Flavie Lachance, Arnaud Beaulé, Hubert Cadieux
  - Alexandre Fortier Chouinard, Yannick Dufresne
@@ -46,8 +46,10 @@ Another major inspiration for this paper was three Instagram posts from Radio-Ca
 Since CPETs are being generally found on the internet, it is important to explore the different possibilities that offers us these new platforms. This could potentially leads us to identify patterns in the public opinion when it is exposed to these information outlets. Indeed, this paper is centered around concepts found in the dynamic world of digital marketing. To understand user behavior, the focal point often rests on Click-through Rates (CTRs), serving as a key indicator of user engagement (Danaher, 2007). In fact, click-through logs are invaluable and can benefit a wide range of search-related applications, such as user satisfaction estimation (Zhu et al., 2011). As we delve into the intricacies of this metric, several trends and considerations emerge, shaping the landscape for the scientists. The art of anticipating CTR trends has evolved with the integration of machine learning algorithms and AI-driven analytics. These tools serve as navigational aids, helping marketers and scientists predict user behavior. An understanding of the global dynamics is essential for accurate CTR predictions. Cultural shifts, regional preferences, and societal trends significantly impact user engagement in diverse markets (Danaher, 2007).
  
 Another way of examining the prediction of clicks comes from the study of Randolph E. Bucklin and Catarina Sismeiro (2003). In their study, the authors use a type II tobit model to assess and measure the rates of clicks (Bucklin, Sismeiro, 2003). Indeed, they develop a modeling approach to understand some of the basics around the site-browsing behavior at the individual level (Bucklin, Sismeiro, 2003). The scientists used two variables to determine and evaluate the behaviors of the people. The first one resides in the manifest by page request (Bucklin, Sismeiro, 2003). In other words, going to another link on the page you were shows the intent from the individual to stay on the site. The same goes for going back, etc. Users determine the rate of page views themselves with how often they click on links during a session (Danaher, 2007). The second dependent variable is the time someone stays on the same page (Bucklin, Sismeiro, 2003). According to Google Support, the duration on the platform Google Analytics is measured using the total duration of all engaged sessions (in seconds) divided by the number of sessions (Google Analytics, 2023).  Using these two variables, the authors found that users reduce their expected number of page views when they come back to the same site. This leads us to one of our hypothesis :\newline 
- 
-*H1) We expect to find stronger coefficients in Google Analytics when using views from a user or the average duration by session compared to other types of data from Google Analytics.* 
+
+*H1) Assuming that Polimeter users who consult promise pages from a specific issue category are comparable to CES users who consider this category as their most preferred issue, we expect to find stronger effect on political trust from Google Analytics when using the number of page views from a user and the duration of these views compared to the other types of data from Google Analytics.* 
+
+The comparability of these 2 data sets will be further explained in the  "Data and Methodology" section.
 
 # Public perception, media malaise and negativity bias
  
@@ -66,33 +68,35 @@ In addition to being an essential source of information, the media are used as h
 However, the influence of negative biases present in the media does not have the same effect on all citizens. Indeed, political sophistication plays a mediating role. Individuals with greater political sophistication appear less influenced by negative media biases (Chang, 2018; Desmet et al., 2015). The political sophistication includes interest, involvement, and political knowledge (Converse, 1964). According to Zaller (1992), individuals who are highly attentive and interested in politics are more likely to gather information through the media and, consequently, be exposed to media messages. However, they are less influenced by these messages because their interest in politics provides them with knowledge that allows them to filter information. The most politically sophisticated voters generally gather information from a greater quantity and better quality of sources and are generally able to assess the realization of electoral promises more accurately (Thomson and Brandenburg, 2019). 
 Thus, our second hypothesis is based on such theories : \newline
 
-*H2) Voters with a higher level of political knowledge and interest should be more inclined to use information seeking media such as CPETs.*
+Assuming that Polimeter users who consult promise pages from a specific issue category are comparable to CES users who consider this category as their most preferred issue, we contend that a page view on a promise should should lead to political trust.
 
+*H2) Assuming that Polimeter users are comparable to sophisticated CES users who consult promise pages from a specific issue category are comparable to CES users who consider this category as their most preferred issue, we predict that CES users with a higher level of political sophiscation should receive greater influence for a broken or kept pledge on political trust since they are more inclined to use information seeking media such as CPETs.*
 
-# Data
+Details on this hypothesis will be further explained in the “Data and Methodology” section.
+
+# Data & Methodology
 
 In order to verify such claims, this paper will be applying aggregated Google Analytics data from the Polimeter's website on the answers of respondants of the Canadian Electoral survey of 2021. To clarify, the Polimeter is a Canadian campaign pledge evaluation tool (CPET) that tracks the electoral promises of ruling parties on the provincial as well as the federal level (Tremblay-Antoine et al., 2020; Trudeau Polimeter, 2015). As said earlier in this article, part of it's inspiration came from the Polimeter's data. In fact, this CPET is dividing the possible verdict of a campaign pledge in 5 ways : *"Kept", "Partially Kept", "Broken", "In progress" and "Not yet rated"*. However, in the case of our study, the last two verdict possibilities aren't aligning with the theories mobilized, and are in that cased not considered for the analysis we are going to do. Only keeping the others will allow us to link page views on the polimeter website with negative or positive entities, and then possibly find a tendency of political trust among Polimeter users. In that regard, we chose to only analyse pledges from Trudeau's first and second mandate. The reason for this is that *In progress* and *Not yet rated* pledges are to be classified as one of the three other possible verdicts when a mandate is over. Indeed, a campaign pledge can only be linked to it's respective mandate and therefore can not be applied to the next one. Since the third mandate is not closed, there are still *In progress* and *Not yet rated* in it, which makes the classification of pledges verdicts more time consuming. Keeping only closed mandates leaves us with datasets already adapted to our research questions.
 
+However, since the Polimeter's research group is at his first time using data from Google Analytics, they have been facing few obstacles regarding its usage. First of all, The Polimeter changed his website structure once which led to having two different time periods of available data for both Polimeter websites. In addition, There has been an major update to Google Analytics which has became Google Analytics 4. Theses changes caused having another division of websites, leaving us with three different websites which means three different time periods to clean and include and our analysis. For practical reasons, we decided to only use the most recent data of the Polimeter's website, which is on Google analytics 4. This choice of data was the most adapted for our research, with the others being more time consuming. We were left with Google Analytics data ranging from August 2021 to December 2023. The data types extracted from the Polimeter are *"Total views, Views by user, Durations and Events"*. The structure of this CPET leads us to agregate these by classifying them by issue categories. Indeed, the Polimetre has 12 issues groups such as *"Economy and Employability, Health and social services or Minorities"*. 
 
+These categories are primordial in order to create the link in between the Polimeter's data and our other dataset, the 2021 Canadian electoral study (CES). This is because there is a question in the CES asking about the most preferred issue of the respondent. Assuming that a view on a specific category on the Polimeter is equal to a particular interest for this issue categore, we are able to apply those aggregated values by issue categories on every CES respondents that have the same most preferred issue. The objective is to answer the first hypothesis by verifying with linear regressions if theses aggregated values have an effect on CES respondants political trust and if some of them aren't manifesting correlations.
 
+Speaking of which, three factorial analysis have been conducted on selected CES variables to figure out which ones could potentially be fused to create a degree of political trust for every respondant. Based on figure 1, all ten questions are above the arbitrary level of 0.3, hence are selected to create that new political trust variables. The second factorial analysis has been made to create a political sophistication variable, from which 3 out of 14 were under the treshold of 0.3. The third factorial analysis confirmed that the 11 remaining variables were linked together and could be added together to create such a variable. This political sophistication variable will be used to answer our second hypothesis. We also added a liberal vote variable since we assume that:
 
-# Grouping par catégories (confiance politique par catégorie)
+*H3) Assuming that Polimeter users are comparable to CES users who consult promise pages from a specific issue category are comparable to CES users who consider this category as their most preferred issue, we expect that CES users who have voted for the Liberal party will express more trust towards a liberal government, such as Trudeau's.*
 
+# Résultats et Analyses
 
+Since our theory mobilizes many concepts that leads to complex hypotheses containing many dependant variables to political trust, the linear regressions models result in 4 tables presenting lots of political trust coefficients.  we have 2 univariate tables, one for no political sophistication threshold and the other having a 0.65 threshold of sophistication. We also have 2 similar tables but for multivariate regressions. Let's break them down.
 
-![](_graphs/TrustScale.png)
-![](_graphs/SophieScale1.png)
+First, for the univariate regressions, we observe slight positive effects on political trust for some issues categories, such as Education, Environment, Families, Health & social services, and Identity & nationalism, while the others have slight negative effects. Others socio-demographic control variables seems to have slight effects on political trust, but nothing major, except for the education level which has a coefficient of 0.102 with 0.009 of statistical significance. The inclusion of a sophistication threshold increases theses coefficients by a little. When applied in multivariates regressions, the results are relativaly similars, whether it is with or without a sophistication level included.
 
-![](_graphs/SophieScale2.png)
+The third hypothesis can be quickly adressed, Since we can observe a positive effect on the liberal vote variable on political trust. This effects becomes stronger when the sophistication threshold is applied. This makes our third hypothesis confirmed.
 
+When it comes to our first hypothesis, the univariate tables shows that the only Google Analytics variables that have an effect on political trust are the mean of views by user. These effects become stronger when adding the sophistication threshold. Similars tendencies can be found in the multivariates tables. The duration and event variables did not show any results in any of the 4 tables, which rules them out of our analysis. Finalement, total views seems to have an inverted effect compared to views by user, but this effect is considerably weaker, almost worth not mentionning. Since durations have no effects on political trust, and page views by user are alligned with our mobilized theory, we can partially confirm our first hypothesis. 
 
-
-# Methodology
-
-
-# analyse
-
-# discussion
+Finally, the finding mentionned in the previous paragraphs shows that almost all variables have an increase in their coefficient when the political sophistication threshold is added. The most important exception is the mean of page views by users in the multivariate analysis. When exposed to a higher level of sophistication, this variable knows a decrease in it's positive effect on political trust. Because of this, Our second variable is partially confirmed.
 
 
 # Conclusion
@@ -154,6 +158,10 @@ Zhu, Z. A., Chen, W., Minka, T., Zhu, C., & Chen, Z. (2010, February). "A novel 
 ### TO ADD TO THE BIBLIOGRAPHY
 
 # Appendix
+
+![](_graphs/TrustScale.png)
+![](_graphs/SophieScale1.png)
+![](_graphs/SophieScale2.png)
 
 Table: Univariate linear models to predict political trust
 
